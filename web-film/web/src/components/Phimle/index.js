@@ -1,7 +1,20 @@
 import { useEffect, useState } from "react";
 import './phimle.scss';
 
-
+const listButton = [
+    {
+        name: "Hành Động"
+    },
+    {
+        name: "Hoạt Hình"
+    },
+    {
+        name: "Kinh Dị"
+    },
+    {
+        name: "Hài Hước"
+    },
+]
 
 const getRandomItems = (arr, num) => {
     const shuffled = arr.sort(() => 0.5 - Math.random());
@@ -10,37 +23,35 @@ const getRandomItems = (arr, num) => {
 
 function PhimLe() {
     const [movies, setMovies] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('All');
     const [displayItems, setDisplayItems] = useState([]);
-
-
     
     const handleCategoryClick = (categoryName) => {
-        setSelectedCategory(categoryName);
+        const filteredMovies = categoryName === 'All'
+            ? movies
+            : movies.filter(movie =>
+                movie.category.some(c => c.name === categoryName)
+            );
+        
+        setDisplayItems(filteredMovies);
     };
-
-    const filteredMovies = selectedCategory === 'All'
-        ? movies
-        : movies.filter(movie =>
-            movie.category.some(c => c.name === selectedCategory)
-        );
 
     useEffect(() => {
         fetch('https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64')
             .then(response => response.json())
             .then(data => {
-                setMovies(data.data.items); // Lấy dữ liệu từ data.items
+                setMovies(data.data.items);
+                setDisplayItems(data.data.items);
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
 
     useEffect(() => {
-        if (filteredMovies.length > 0) {
-            const itemsToDisplay = getRandomItems(filteredMovies, 12);
+        if (displayItems.length > 12) {
+            const itemsToDisplay = getRandomItems(displayItems, 12);
             setDisplayItems(itemsToDisplay);
         }
-    }, [filteredMovies]);
+    }, [displayItems]);
 
     return (
         <>
@@ -49,11 +60,9 @@ function PhimLe() {
                     <div className="heading__content">
                         <h2>PHIM LẺ MỚI CẬP NHẬT</h2>
                         <div className="heading__type">
-
-                            <button onClick={() => handleCategoryClick('Hành Động')}>Hành động</button>
-                            <button onClick={() => handleCategoryClick('Hoạt Hình')}>Hoạt hình</button>
-                            <button onClick={() => handleCategoryClick('Kinh Dị')}>Kinh dị</button>
-                            <button onClick={() => handleCategoryClick('Hài Hước')}>Hài hước</button>
+                            {
+                                listButton.map((item,i) => <button key={i} onClick={() => handleCategoryClick(item.name)}>{item.name}</button>)
+                            }
                         </div>
                     </div>
                     <button onClick={() => handleCategoryClick('All')} >Xem tất cả
