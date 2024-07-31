@@ -1,10 +1,9 @@
-import "./footer.scss";
+import React from 'react';
 
+const Footer = () => (
+  <footer>
+    <p>© 2024 Phim Moi Chill</p>
+  </footer>
+);
 
-function footer (){
-    
-    return {
-
-    }
-}
-export default footer
+export default Footer;

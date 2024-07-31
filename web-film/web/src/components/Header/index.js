@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./header.scss";
@@ -8,52 +11,36 @@ function Header() {
       <div className="header">
         <div className="nav">
           <div className="nav__img">
-            <a href="https://phimmoichillv.net" title="Phim mới">
-            <img src="https://phimmoichillv.net/dev/images/logo.png" alt="phimmoi"></img>
-            </a>
-          </div>
-          <div className="nav__menu">
-            <li>
-              <a href="#">PHIMMOI</a>
-            </li>
-            <li>
-              <a href="#">PHIM LẺ</a>
-            </li>
-            <li>
-              <a href="#">PHIM BỘ</a>
-            </li>
-            <li>
-              <a href="#">THỂ LOẠI</a>
-            </li>
-            <li>
-              <a href="#">QUỐC GIA</a>
-            </li>
-            <li>
-              <a href="#">NĂM PHÁT HÀNH</a>
-            </li>
-            <li>
-              <a href="#">PHIM CHIẾU RẠP</a>
-            </li>
-            <li>
-              <a href="#">TRAILER</a>
-            </li>
-            <li>
-              <a href="#">TOP PHIM</a>
-            </li>
-          </div>
-          <div className="nav__search">
-            <input placeholder="Tìm tên phim, diễn viên..."
+            <li ><Link to="/">
+              <img src="https://phimmoichillv.net/dev/images/logo.png" alt="phimmoi"></img>
+            </Link>
+          </li>
+        </div>
+        <div className="nav__menu">
+          <li><Link to="/movies">PHIMMOI</Link></li>
+          <li><Link to="/categories">PHIM LẺ</Link></li>
+          <li><Link to="/categories">PHIM BỘ</Link></li>
+          <li><Link to="/categories">THỂ LOẠI</Link></li>
+          <li><Link to="/categories">QUỐC GIA</Link></li>
+          <li><Link to="/categories">NĂM PHÁT HÀNH</Link></li>
+          <li><Link to="/categories">PHIM CHIẾU RẠP</Link></li>
+          <li><Link to="/categories">TRAILER</Link></li>
+          <li><Link to="/categories">TOP PHIM</Link></li>
 
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-            >
+        </div>
+        <div className="nav__search">
+          <input placeholder="Tìm tên phim, diễn viên..."
 
-            </input>
-            <FaSearch className="nav__search__icons" />
-          </div>
+            type="text"
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+          >
+
+          </input>
+          <FaSearch className="nav__search__icons" />
         </div>
       </div>
+    </div >
     </>
   )
 }
