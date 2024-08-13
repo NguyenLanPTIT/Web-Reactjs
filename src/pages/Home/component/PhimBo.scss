@@ -1,0 +1,183 @@
+.movie {
+    .movie__heading {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        width: 100%;
+        align-items: center;
+        .link-btn{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .heading__content {
+            display: flex;
+            justify-content: center;
+            .link{
+                text-decoration: none;
+                color: #ff8a00;
+            }
+
+            .heading__type {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                margin-left: 60px;
+            }
+
+            button {
+                margin-right: 0;
+
+                .right {
+                    float: right;
+                    margin: 0 0 0 3px;
+                }
+            }
+
+        }
+
+        button {
+            color: #fff;
+            padding: 3px 5px;
+            background: #0b0f15;
+            border-bottom: 2px solid #1a1a1a;
+            display: inline-table;
+            margin-left: 8px;
+            height: 30px;
+            cursor: pointer;
+            transition: .7s all;
+            background: #504d49;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            &:hover {
+                background-color: #ff6901;
+                border-bottom: 2px solid #ff6901;
+
+                color: #fff;
+
+            }
+
+        }
+
+    }
+
+    .movie__list {
+        width: 100%;
+        max-width: 1500px;
+        margin-right: -10px;
+        position: relative;
+        overflow: hidden;
+
+        .movie__item {
+            float: left;
+            width: 20%;
+            position: relative;
+            font-family: roboto;
+            font-size: 15px;
+            list-style: none;
+            margin-top: -5px;
+
+            .lable {
+                position: absolute;
+                display: inline;
+                padding: 5px;
+                font-size: 11px;
+                color: #fff;
+                background: #1b2a39;
+                border-bottom: 2px solid #bb3c2f;
+                border: 1px solid #1b2a3900;
+                position: relative;
+                top: 5px;
+                z-index: 2;
+                font-family: roboto;
+                font-weight: 400;
+                background-size: 200% 100%;
+                background-image: linear-gradient(to right, #C02425 0%, #F0CB35 51%, #C02425 100%);
+                transition: .7s;
+                line-height: 1;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: .25em;
+
+
+                &:after {
+                    content: '';
+                    border-bottom: 6px solid #dd8b52;
+                    border-left: 6px solid transparent;
+                    display: block;
+                    border-right: 6px solid transparent;
+                    bottom: -10px;
+                    left: 50%;
+                    position: absolute;
+                    transform: translate(-50%, -50%) rotate(180deg);
+                }
+            }
+
+            .movie__image {
+                top: -16px;
+                margin: 0 10px 0 0;
+                display: block;
+                position: relative;
+                overflow: hidden;
+                height: 135px;
+                object-fit: cover;
+
+                img {
+                    width: 100%;
+                    transition: all .4s ease-in-out;
+                    vertical-align: middle;
+                    border: 0;
+                    overflow: hidden;
+
+                    &:hover {
+                        transform: scale(1.3);
+                    }
+
+                }
+
+                h3 {
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    right: 0;
+                    background: rgba(0, 0, 0, .6);
+                    color: #fff;
+                    padding: 10px;
+                    line-height: 1.3em;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    font-size: 15px;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+
+                }
+
+                .play-icons {
+                    color: #ff9601;
+                    height: 50px;
+                    width: 50px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin: -25px 0 0 -25px;
+                    border-radius: 50%;
+                    opacity: 0;
+                    transform: scale(1.5);
+                    transition: all .3s ease-in-out;
+                }
+            }
+
+            &:hover .play-icons {
+                display: block;
+
+            }
+
+        }
+    }
+}

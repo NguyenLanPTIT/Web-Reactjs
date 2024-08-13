@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+main {
+  background-color: #1a1a1a;
+
+}
+
+body {
+  background: #1a1a1a;
+  margin: 0;
+  font-family: Arial, Tahoma;
+  font-size: 14px;
+  color: #dcdcdc;
+}
