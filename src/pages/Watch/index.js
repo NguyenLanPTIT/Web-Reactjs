@@ -7,21 +7,31 @@ import { FaChevronRight } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
-import { IoIosPlayCircle } from "react-icons/io";
-import { FaRegCirclePlay } from "react-icons/fa6";
+import { IoMdPlay } from "react-icons/io";
+import { IoMdVolumeHigh } from "react-icons/io";
+import { FaArrowRotateLeft } from "react-icons/fa6";
+import { FaArrowRotateRight } from "react-icons/fa6";
+import { FaChromecast } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
+import { RiFullscreenLine } from "react-icons/ri";
+import { FaPowerOff } from "react-icons/fa6";
+import { MdSaveAlt } from "react-icons/md";
+import { FaDatabase } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import avataImage from "../../image/avata.jpg";
-import avata2 from '../../image/avata2.png';
-import avata3 from '../../image/avata3.jpg';
-import avata4 from '../../image/avata4.jpg';
+import avata2 from "../../image/avata2.png";
+import avata3 from "../../image/avata3.jpg";
+import avata4 from "../../image/avata4.jpg";
+import OffQC from "../../image/OffQC.webp";
+import "./watch.scss";
 
 function Watch() {
     const { slug } = useParams();
     const [movie, setMovie] = useState(null);
     const [episodes, setEpisodes] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('Mới nhất');
+    const [selectedOption, setSelectedOption] = useState("Mới nhất");
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -30,6 +40,7 @@ function Watch() {
         setIsOpen(false);
     };
 
+    const [isActive, setIsActive] = useState(true);
     useEffect(() => {
         const fetchMovieDetails = async () => {
             try {
@@ -46,95 +57,62 @@ function Watch() {
 
         fetchMovieDetails();
     }, [slug]);
+
     if (!movie) {
         return <div>Movie not found</div>;
     }
 
     const renderSingleMovieInfo = () => {
         return (
-            <div>
-                <li>
-                    <label>Đang phát:</label>{" "}
-                    <span className="type"> {movie.quality} {movie.lang}</span>
-                </li>
-
-                <li>
-                    <label>Năm phát hành:</label>{" "}
-                    <span> {movie.year}</span>
-                </li>
-                <li>
-                    <label>Quốc gia:</label>{" "}
-                    <span>{movie.country.map((c) => c.name).join(", ")}</span>
-                </li>
-
-                <li>
-                    <label>Thể loại:</label>{" "}
-                    <span>{movie.category.map((cat) => cat.name).join(", ")}</span>
-                </li>
-                <li>
-                    <label>Đạo diễn:</label>{" "}
-                    <span>{movie.director.join(", ")}</span>
-                </li>
-                <li>
-                    <label>Thời lượng:</label>{" "}
-                    <span>{movie.time}</span>
-                </li>
-                <li>
-                    <label>Diễn viên:</label>
-                    <span> {movie.actor.join(", ")}</span>
-                </li>
+            <div className="list-server">
             </div>
         );
     };
 
     const renderSeriesMovieInfo = () => {
         return (
-            <div>
-                <li>
-                    <label>Đang phát:</label>{" "}
-                    {movie.episode_current.includes("Hoàn tất") ?
-                        <span className="type"> {movie.episode_current}</span> :
-                        <span className="type"> {movie.quality} {movie.lang}</span>
-                    }
-                </li>
-
-                <li>
-                    <label>Năm phát hành:</label>{" "}
-                    <span> {movie.year}</span>
-                </li>
-                <li>
-                    <label>Quốc gia:</label>{" "}
-                    <span>{movie.country.map((c) => c.name).join(", ")}</span>
-                </li>
-
-                <li>
-                    <label>Thể loại:</label>{" "}
-                    <span>{movie.category.map((cat) => cat.name).join(", ")}</span>
-                </li>
-                <li>
-                    <label>Đạo diễn:</label>{" "}
-                    <span>{movie.director.join(", ")}</span>
-                </li>
-                <li>
-                    <label>Thời lượng:</label>{" "}
-                    <span>{movie.episode_total} Tập</span>
-                </li>
-                <li>
-                    <label>Diễn viên:</label>
-                    <span> {movie.actor.join(", ")}</span>
-                </li>
+            <div className="list-server">
+                <div className="server-group">
+                    <span> <FaDatabase  className="icon-data"/>Danh sách tập #PM</span>
+                    <ul>
+                        {episodes.map(
+                            (episode, index) =>
+                                episode.server_data.length > 1 && (
+                                    <li className="item-chapter" key={index}>
+                                        <strong>{episode.name}</strong>
+                                        {episode.server_data
+                                            .sort((a, b) => {
+                                                const episodeNumberA = parseInt(a.slug.split("-")[1]);
+                                                const episodeNumberB = parseInt(b.slug.split("-")[1]);
+                                                return episodeNumberA - episodeNumberB;
+                                            })
+                                            .map((item, idx) => (
+                                                <button
+                                                    className={`name-chapter ${idx === 0 ? "first-item" : ""}`}  key={idx}
+                                                >
+                                                    {item.name}
+                                                </button>
+                                            ))}
+                                    </li>
+                                )
+                        )}
+                    </ul>
+                </div>
             </div>
         );
     };
 
     return (
-        <div className="movie-container">
+        <div className="watch-container">
+            <div className="block-note">
+                Truy cập PhimMoiPlus.Net nếu bạn không vào được PhimMoiChill{" "}
+            </div>
             <div className="breadcrumb">
                 <span itemProp="name">
                     <FaHome className="item" />
                     <Link className="title-link" to="/movies">
                         {" "}
-                        Xem Phim
+                        PhimMoi
                     </Link>
                     <FaChevronRight className="item" />
                 </span>
@@ -155,92 +133,156 @@ function Watch() {
                     </Link>
                     <FaChevronRight className="item" />
                 </span>
-                <li> {movie.name}</li>
+                <li className="name-movie">
+                    {" "}
+                    {movie.name} <FaChevronRight className="item" />
+                </li>
+                <li className="chaper-movie">{movie.type === 'single' ? "Tập Full" : "Tập 1"}
+                </li>
             </div>
-            <div className="info">
-                <div className="image">
-                    <div className="movie" style={{ backgroundImage: `url(${movie.poster_url})` }}>
-                        <img className="poster" src={movie.thumb_url} alt={movie.name} />
-                        <Link className='link-btn' to={`/xem/${movie.slug}`}>
-                            <IoIosPlayCircle className="play-icons" /></Link>
-                        <div className="text">
-                            <h1>{movie.name}</h1>
-                            <h2>{movie.origin_name} ({movie.year})</h2>
-                            <div className="list-btn">
-
-                                <button className="play"><FaRegCirclePlay className="item" />Xem phim</button>
+            <div className="box-player">
+                <div className="player">
+                    <div
+                        className="movie"
+                        style={{ backgroundImage: `url(${movie.poster_url})` }}
+                    ></div>
+                    <div className="control-player">
+                        <input type="range" className="progress-bar" />
+                        <div className="btn-player">
+                            <div className="play-time">
+                                <div className="play-icon">
+                                    <IoMdPlay />
+                                </div>
+                                <div className="volume-icon">
+                                    <IoMdVolumeHigh />
+                                </div>
+                                <div className="time-icon">00:00/1:36:02</div>
+                            </div>
+                            <div className="play-setting">
+                                <div className="reset-icon">
+                                    <FaArrowRotateLeft />
+                                </div>
+                                <div className="fast-icon">
+                                    <FaArrowRotateRight />
+                                </div>
+                                <div className="player-icon">
+                                    <FaChromecast />
+                                </div>
+                                <div className="set-icon">
+                                    <IoMdSettings />
+                                </div>
+                                <div className="room-icon">
+                                    <RiFullscreenLine />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="latest-episode">
-                    <span className="heading">Tập mới nhất :</span>
-                    {episodes.map(
-                        (episode, index) =>
-                            episode.server_data.length > 1 && (
-                                <li className="item-chapter" key={index}>
-                                    <strong>{episode.name}</strong>
-                                    {episode.server_data
-                                        .slice(-5)
-                                        .sort((a, b) => {
-                                            const episodeNumberA = parseInt(a.slug.split("-")[1]);
-                                            const episodeNumberB = parseInt(b.slug.split("-")[1]);
-                                            return episodeNumberB - episodeNumberA;
-                                        })
-                                        .map((item, idx) => (
-                                            <button className="name-chapter" key={-idx}>
-                                                {item.name}
-                                            </button>
-                                        ))}
-                                </li>
-                            )
-                    )}
+                <div className="film-note">
+                    Phim Xem tốt nhất trên trình duyệt Safari,FireFox hoặc Chrome. Đừng
+                    tiếc 1 comment bên dưới để đánh giá phim hoặc báo lỗi. Đổi server nếu
+                    lỗi,lag
                 </div>
-                <div className="text-content">
-                    <div className="social">
-                        <div className="fb-like">
-                            <button className="like">
-                                <AiTwotoneLike className="icons" /> Thích
-                            </button>
-                            <button className="share">Chia sẻ</button>
-                        </div>
-                        <div className="box-rating">
-                            <div className="star">
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star" />
-                                <FaStar className="icon-star no-active" />
+                <div className="hide"></div>
+                <div className="options">
+                    <ul class="tool">
+                        <li class="off-ads">
+                            <span>Tắt QC</span>
+                            <img src={OffQC} alt="Tắt QC" />
+                        </li>
+                        <li class="power-lamp">
+                            <span class="text-lamp">Tắt đèn</span>
+                            <div className="off-lamp">
+                                <FaPowerOff />
                             </div>
-                            <p className="average">(9 đ/50 lượt)</p>
-                        </div>
-                    </div>
-                    <ul className="block-film">
-                        {movie.type === 'single' ? renderSingleMovieInfo() : renderSeriesMovieInfo()}
+                        </li>
+                        <li class="autoplay">
+                            <span>Tự chuyển tập</span>
+                            <div className={`toggle-button ${isActive ? 'active' : ''}`}>
+                                <div className="buttons">
+                                    <button
+                                        onClick={() => setIsActive(false)}
+                                        className={`button no ${!isActive ? 'no-active' : ''}`}
+                                    >
+                                        NO
+                                    </button>
+                                    <button
+                                        onClick={() => setIsActive(true)}
+                                        className={`button yes ${isActive ? 'selected' : ''}`}
+                                    >
+                                        YES
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
-                    <div className="film-content">
-                        <h3 className="film-heading">
-                            Nội dung phim:
-                        </h3>
-                        <div className="text-decs"><strong>{movie.name} {movie.origin_name} {movie.year}</strong> {movie.content}</div>
-                    </div>
-                   
-                    <div className="tags-film">
-                        <h2 className="tag-header">Tags</h2>
-                        <div className="tag-content">
-                            <li className="tag-btn">{movie.name} </li>
-                            <li className="tag-btn">{movie.origin_name} </li>
-                        </div>
-                    </div>
                 </div>
 
 
-                <div className="comment">
+            </div>
+            <div className="server">
+                <center>
+                    <ul className="server-list">
+                        <li className="backup-server">
+                            <span className="server-title">Đổi Server</span>
+                            <div className="list-episode">
+                                <ul className="episode">
+                                    <li className="episode1">#1 PMFAST</li>
+                                    <li className="episode2">#2 PMHLS</li>
+                                    <li className="episode2">#3 PMPRO</li>
+                                    <li className="episode2">#4 PMBK</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </center>
+
+
+            </div>
+            {movie.type === 'single' ? renderSingleMovieInfo() : renderSeriesMovieInfo()}
+
+
+            <div className="box-rating">
+                <p>Đánh giá phim
+                    <span class="text">(8đ / 35 lượt)</span> </p>
+                <div className="star">
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star" />
+                    <FaStar className="icon-star no-active" />
+                </div>
+            </div>
+            <div className="social">
+                <div className="fb-like">
+                    <button className="like">
+                        <AiTwotoneLike className="icons" /> Thích
+                    </button>
+                    <button className="share">Chia sẻ</button>
+                </div>
+                <div className="fb-save">
+                    <button className="save">
+                        <MdSaveAlt className="save-icon" />Lưu vào Facebook
+                    </button>
+                </div>
+            </div>
+            <div className="film-info" >
+                <div className="film-content">
+                    <h1 className="film-heading">{movie.name} - {movie.type === 'single' ? "Tập Full" : "Tập 1"}
+                    </h1>
+                    <h2 className="decs-head"> {movie.origin_name} </h2>
+                    <p className="decs-text">{movie.name} {movie.origin_name} {movie.year} {movie.content}
+                    </p>
+
+                </div>
+
+
+                {/* <div className="comment">
                     <div className="content-cmt">
                         <div className="header-cmt">
                             <div className="number">1 bình luận </div>
@@ -252,7 +294,9 @@ function Watch() {
                                 </button>
                                 {isOpen && (
                                     <div className="dropdown-content">
+
                                         <li onClick={() => handleOptionClick('Mới nhất')}>Mới nhất</li>
+
                                         <li onClick={() => handleOptionClick('Cũ nhất')}>Cũ nhất</li>
                                     </div>
                                 )}
@@ -319,13 +363,14 @@ function Watch() {
 
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div>
                     <PhimLienQuan />
                 </div>
                 <div>
                     <PhimDeCu />
                 </div>
+
             </div>
         </div>
     );

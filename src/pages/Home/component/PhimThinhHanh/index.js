@@ -85,12 +85,12 @@ function Movies() {
                     </div>
                 </div>
                 <button><Link className="link-btn" to="/categories/phim-hot">Xem tất cả</Link>
-                        <FaCaretRight />
-                    </button>
+                    <FaCaretRight />
+                </button>
             </div>
             <div className="movie__list">
-                {displayItems.map(item => (
-                    <div key={item._id} className="movie__item">
+                {displayItems.map((item, index) => (
+                    <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
                         <Link className="link" to={`/movies/${item.slug}`}>
                             <span className="lable">HD-{item.lang}</span>
                             <div className='movie__image'>

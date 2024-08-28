@@ -7,6 +7,7 @@ import Categories from './pages/Categories';
 import Watch from './pages/Watch';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
+import FootLink from './pages/FootLink';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/xem/:slug" element={<Watch />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route path="/post/:info" element={<FootLink />} />
                 </Routes>
             </Layout>
         </Router>

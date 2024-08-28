@@ -2,6 +2,7 @@
     max-width: 980px;
     margin: 0 auto;
     color: #828282;
+    margin-top: 50px;
 
     &::before {
         display: table;
@@ -9,14 +10,13 @@
 
     .breadcrumb {
         background: #252525;
-        font-family: roboto;
-        padding: 8px 15px;
         list-style: none;
         border-radius: 4px;
         display: flex;
         color: #fff;
         text-align: center;
         align-items: center;
+        font-size: 14px;
 
         span {
             color: #ff9601;

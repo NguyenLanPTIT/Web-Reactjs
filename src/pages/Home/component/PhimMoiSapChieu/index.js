@@ -21,7 +21,7 @@ function PhimMoi() {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                const movies2024 = data.items.filter(movie => movie.year === 2021);
+                const movies2024 = data.items.filter(movie => movie.year === 2024||movie.year === 2020);
                 setMovies(movies2024);
                 setDisplayItems(movies2024);
             })

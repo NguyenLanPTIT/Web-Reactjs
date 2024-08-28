@@ -90,7 +90,7 @@ function MovieDetailPage() {
     };
 
     fetchMovieDetails();
-  }, [slug,comments]);
+  }, [slug, comments]);
 
   if (!movie) {
     return <div>Movie not found</div>;
@@ -227,29 +227,31 @@ function MovieDetailPage() {
             </div>
           </div>
         </div>
-        <div className="latest-episode">
-          <span className="heading">Tập mới nhất :</span>
-          {episodes.map(
-            (episode, index) =>
-              episode.server_data.length > 1 && (
-                <li className="item-chapter" key={index}>
-                  <strong>{episode.name}</strong>
-                  {episode.server_data
-                    .slice(-5)
-                    .sort((a, b) => {
-                      const episodeNumberA = parseInt(a.slug.split("-")[1]);
-                      const episodeNumberB = parseInt(b.slug.split("-")[1]);
-                      return episodeNumberB - episodeNumberA;
-                    })
-                    .map((item, idx) => (
-                      <button className="name-chapter" key={-idx}>
-                        {item.name}
-                      </button>
-                    ))}
-                </li>
-              )
-          )}
-        </div>
+        {movie.type === 'single' ? "" :
+          <div className="latest-episode">
+            <span className="heading">Tập mới nhất :</span>
+            {episodes.map(
+              (episode, index) =>
+                episode.server_data.length > 1 && (
+                  <li className="item-chapter" key={index}>
+                    <strong>{episode.name}</strong>
+                    {episode.server_data
+                      .slice(-5)
+                      .sort((a, b) => {
+                        const episodeNumberA = parseInt(a.slug.split("-")[1]);
+                        const episodeNumberB = parseInt(b.slug.split("-")[1]);
+                        return episodeNumberB - episodeNumberA;
+                      })
+                      .map((item, idx) => (
+                        <button className="name-chapter" key={-idx}>
+                          {item.name}
+                        </button>
+                      ))}
+                  </li>
+                )
+            )}
+          </div>
+        }
         <div className="text-content">
           <div className="social">
             <div className="fb-like">

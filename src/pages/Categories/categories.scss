@@ -1,24 +1,26 @@
 .content {
   width: 100%;
-
+  margin-top: 40px;
+  max-width: 1500px;
+  margin: 0 auto;
 
   .container {
     margin: 0 auto;
 
     .detail__heading {
-      display: flex;
-      justify-content: space-between;
+
       overflow: hidden;
-      margin: 0 0 20px;
+      margin: 15px 0 20px;
 
       .heading {
+        float: left;
         color: #ff8a00;
       }
 
       .order {
-        display: flex;
-        align-items: center;
-        text-align: center;
+        margin: 0;
+        padding: 0;
+        float: right;
 
         li {
           display: inline-block;
@@ -88,7 +90,6 @@
 
       .breadcrumb {
         background: #252525;
-        font-family: roboto;
         padding: 8px 15px;
         list-style: none;
         border-radius: 4px;
@@ -101,6 +102,7 @@
             display: flex;
             justify-content: center;
             text-align: center;
+            align-items: center;
 
             .title-link {
               color: #ff9601;
@@ -127,6 +129,7 @@
         margin: 22px 0 27px;
         padding: 20px;
         background-color: #423e3e;
+        color: #dcdcdc;
 
         .desc-detail {
           color: #ff9601;
@@ -152,13 +155,13 @@
           float: left;
           width: 20%;
           position: relative;
-          font-family: roboto;
           font-size: 15px;
           list-style: none;
           margin-top: -5px;
 
           .link {
             text-decoration: none;
+
             .lable {
               position: absolute;
               display: inline;
@@ -171,7 +174,6 @@
               position: relative;
               top: 5px;
               z-index: 2;
-              font-family: roboto;
               font-weight: 400;
               background-size: 200% 100%;
               background-image: linear-gradient(to right, #C02425 0%, #F0CB35 51%, #C02425 100%);
@@ -248,7 +250,7 @@
                 opacity: 0;
                 transform: scale(1.5);
                 transition: all .3s ease-in-out;
-                
+
 
 
                 &:after {
@@ -262,10 +264,11 @@
                 }
               }
             }
+
             &:hover .play-icons {
               display: block;
 
-          }
+            }
           }
 
 

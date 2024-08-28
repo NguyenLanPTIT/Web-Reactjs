@@ -76,8 +76,8 @@ function PhimBo() {
                     </button>
                 </div>
                 <div className="movie__list">
-                    {displayItems.map(item => (
-                        <div key={item._id} className="movie__item">
+                    {displayItems.map((item, index) => (
+                        <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
                             <Link className="link" to={`/movies/${item.slug}`}>
                                 <span className="lable">HD-{item.lang}</span>
                                 <div className='movie__image'>
@@ -90,46 +90,9 @@ function PhimBo() {
                         </div>
                     ))}
                 </div>
-
             </div>
 
         </>
     );
 }
 export default PhimBo;
-
-
-
-//comment
-// const storegeComments = JSON.parse(localStorage.getItem('comments'))
-//   const [comment, setComment] = useState('')
-//   const [comments, setComments] = useState(storegeComments ?? [] );
-
-//   const handleSubmit = () => {
-//     setComments(prev => {
-//       const newComments = [...prev, comment]
-//       const jsonComments = JSON.stringify(newComments)
-//       localStorage.setItem('comments', jsonComments)
-//       return newComments
-//     })
-//     setComment('')
-//   }
-
-//   return (
-//     <div>
-//           <input placeholder='Viết bình luận' value={comment}
-//             onChange={e => setComment(e.target.value)} >
-//           </input>
-//           <button onClick={handleSubmit}>Đăng</button>
-
-//           <ul>
-//             {comments.map((comment, index) => (
-//               <li key={index}>{comment}</li>
-//             )
-
-//             )}
-
-//           </ul>
-//         </div>
-
-//   )

@@ -11,11 +11,11 @@ const apiMap = {
   "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
   "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64",
   "hoat-hinh": "https://phimapi.com/v1/api/danh-sach/hoat-hinh?skip=1&limit=64",
-  "tv-shows": "https://phimapi.com/v1/api/danh-sach/tv-shows?skip=1&limit=64",
+  "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows?skip=1&limit=64",
   "phim-hot": [
-        "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
-        "https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64"
-    ]
+    "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
+    "https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64"
+  ]
 };
 
 const CategoryPage = () => {
@@ -59,7 +59,7 @@ const CategoryPage = () => {
       <div className="container">
         <div className="detail__heading">
           <h2 className="heading">
-            {titlePage}
+            {titlePage === 'TV Shows' ? "PHIM CHIẾU RẠP" : titlePage.toUpperCase()}
           </h2>
           <ul className="order">
             <li>
@@ -162,15 +162,14 @@ const CategoryPage = () => {
               <span itemProp="name" >
                 <FaHome /><Link className="title-link" to="/movies"> Phim Mới</Link><FaChevronRight />
               </span>
-              <li>{titlePage}</li>
+              <li>{titlePage === 'TV Shows' ? "Phim Chiếu Rạp" : titlePage}</li>
             </div>
 
           </div>
           <div className="desc">
             Khám phá danh sách
-
             <Link className="desc-detail" to="" onClick={handleReload}>
-              <strong>{titlePage}</strong>{" "}
+              <strong>{titlePage === 'TV Shows' ? "Phim Chiếu Rạp" : titlePage}</strong>{" "}
             </Link>
             mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải
             xuống hơn 100.000+ bộ phim le Vietsub, thuyết minh đang thịnh hành
@@ -180,7 +179,7 @@ const CategoryPage = () => {
         </div>
         <div className="heading__content">
           <div className="card">
-            {movies.map((movie) => (   
+            {movies.map((movie) => (
               <div key={movie.id} className="card__item">
                 <Link className="link" to={`/movies/${movie.slug}`}>
                   <span className="lable">HD-{movie.lang}</span>

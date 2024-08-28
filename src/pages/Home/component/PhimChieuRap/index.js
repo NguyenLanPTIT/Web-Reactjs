@@ -80,8 +80,8 @@ function PhimLe() {
           </button>
         </div>
         <div className="movie__list">
-          {displayItems.map((item) => (
-            <div key={item._id} className="movie__item">
+          {displayItems.map((item, index) => (
+            <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
               <Link className="link" to={`/movies/${item.slug}`}>
                 <span className="lable">HD-{item.lang}</span>
                 <div className="movie__image">
