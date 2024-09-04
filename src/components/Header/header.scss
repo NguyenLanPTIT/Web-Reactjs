@@ -44,11 +44,13 @@
                 .nav__menu {
                     margin: 0;
                     padding: 0;
+                    line-height: 60px;
         
                     li {
                         float: left;
                         position: relative;
                         list-style: none;
+                        cursor: pointer;
         
                         .link-title {
                             display: flex;

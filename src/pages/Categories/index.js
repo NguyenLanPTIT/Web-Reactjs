@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { IoIosPlayCircle } from "react-icons/io";
 import "./categories.scss";
 const apiMap = {
   "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
@@ -29,8 +28,7 @@ const CategoryPage = () => {
     navigate(0);
   }
   useEffect(() => {
-    const apiURL = `${apiMap[category] || apiMap["default"]
-      }?page=${currentPage}&limit=25`;
+    const apiURL = `${apiMap[category] || apiMap["default"]}?page=${currentPage}&limit=25`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
@@ -180,8 +178,7 @@ const CategoryPage = () => {
         <div className="heading__content">
           <div className="card">
             {movies.map((movie) => (
-              <div key={movie.id} className="card__item">
-                <Link className="link" to={`/movies/${movie.slug}`}>
+                <Link  key={movie.id} className="card__item" to={`/movies/${movie.slug}`}>
                   <span className="lable">HD-{movie.lang}</span>
                   <div className="card__image">
                     <img
@@ -190,15 +187,12 @@ const CategoryPage = () => {
                       className="card-thumbnail"
                     />
                     <h3 className="card__title">{movie.title}</h3>
-                    <IoIosPlayCircle className="play-icons" />
+                    <div className="play-movie"></div>
                   </div>
                 </Link>
-              </div>
             ))}
-
-
           </div>
-          <Pagination className="pagination"
+          <Pagination 
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
