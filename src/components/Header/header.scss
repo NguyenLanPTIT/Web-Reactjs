@@ -2,7 +2,8 @@
     background: rgba(0, 0, 0, .3);
     padding: 5px 0 0;
     margin: 0 0 20px;
-    .content-header{
+
+    .content-header {
         .nav {
             margin: 0 auto;
             width: auto;
@@ -11,9 +12,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .container-nav{
+
+            .container-nav {
                 display: flex;
                 align-items: center;
+
                 .nav__img {
                     float: left;
                     width: 13%;
@@ -24,34 +27,75 @@
                     justify-content: center;
                     align-items: center;
                     text-align: center;
-        
-        
+
+
                     .image {
                         text-decoration: none;
-        
-        
+
+
                         img {
                             width: 100%;
                             padding: 12px;
                             vertical-align: middle;
                             height: 36px;
-        
+
                         }
-        
+
                     }
                 }
-        
+
                 .nav__menu {
                     margin: 0;
                     padding: 0;
                     line-height: 60px;
-        
+
                     li {
                         float: left;
                         position: relative;
                         list-style: none;
                         cursor: pointer;
-        
+
+                        &:hover {
+                            .sub-menu {
+                                display: block;
+                            }
+
+                        }
+
+                        .sub-menu {
+                            display: none;
+                            position: absolute;
+                            left: 0;
+                            top: 100%;
+                            width: 350px;
+                            background: #121212;
+                            display: none;
+                            z-index: 100;
+                            padding: 0 11px;
+                            li{
+                                width: 50%;
+                                float: left;
+                                position: relative;
+                                line-height: 35px;
+                                font-size: 14px;
+                                text-transform: none;
+                                border: none;
+                                color: #fff;
+                                list-style: none;
+                                p{
+                                    line-height: 35px;
+                                    font-size: 14px;
+                                    text-transform: none;
+                                    border: none;
+                                    color: #fff;
+                                    margin: 0;
+                                }
+                            }
+                        }
+                        .span-6{
+                            width: 350px;
+                        }
+
                         .link-title {
                             display: flex;
                             align-items: center;
@@ -61,21 +105,28 @@
                             font-size: 14px;
                             text-decoration: none;
                             text-transform: uppercase;
-        
+
+                            &:hover {
+                                color: #ff9601;
+
+                            }
+
+
+
                         }
-        
+
                         .vip {
                             position: relative;
                             color: #ff9601;
                             font-size: 18px;
                         }
                     }
-        
-        
+
+
                 }
             }
-         
-    
+
+
             .nav__search {
                 float: right;
                 text-align: right;
@@ -85,8 +136,8 @@
                 transition: all .3s ease;
                 border: 1px solid #fff;
                 width: 16%;
-    
-    
+
+
                 input {
                     background-color: rgba(0, 0, 0, .3);
                     border: none;
@@ -95,9 +146,9 @@
                     height: 24px;
                     margin: 0;
                     color: #dcdcdc;
-    
+
                 }
-    
+
                 .nav__search__icons {
                     text-align: right;
                     color: #dcdcdc;
@@ -107,9 +158,9 @@
                     right: 8px;
                 }
             }
-    
-    
+
+
         }
     }
-  
+
 }
