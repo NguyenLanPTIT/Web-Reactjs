@@ -5,7 +5,9 @@ import { FaCaretRight } from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { FaCaretLeft } from "react-icons/fa";
-import "./Film.scss"
+
+import "./phimdecumoi.scss"
+
 const PrevArrow = ({ onClick }) => (
     <button className="slick-prev custom-arrow " onClick={onClick}><FaCaretLeft /></button>
   );
@@ -20,13 +22,21 @@ function MovieSlider() {
         // speed: 500,
         slidesToShow: 5,
         slidesToScroll: 5,
-        autoplay: true,
-        //  autoplaySpeed: 2000,
+        // autoplay: true,
+        // autoplaySpeed: 2000
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         arrows: true
     };
-    
+    function getLabel(movie) {
+        if (movie.episode_current) {
+            return movie.episode_current;
+        } else if (movie.lang) {
+            return `HD|${movie.lang}`;
+        } else {
+            return 'HD';
+        }
+    }
     const [data, setMovies] = useState([]);
     useEffect(() => {
         const fetchMovies = async () => {
@@ -59,14 +69,14 @@ function MovieSlider() {
         <>
             <div className='movie-recent'>
                 <div className='movie__heading '>
-                    <p>CÓ THỂ BẠN CŨNG MUỐN XEM</p>
+                    <p>PHIM ĐỀ CỬ MỚI</p>
                 </div>
                 <Slider {...settings} className='slider-recent'>
                     {data.map(item => (
-                        <div key={item._id} className="movie__item1">
+                        <div key={item._id} className="movie__item">
                             <Link className="link" to={`/movies/${item.slug}`}>
-                                <span className="lable1">
-                                    {item.year}</span>
+                                <span className="lable">
+                                    {getLabel(item)}</span>
                                 <div className='movie__image'>
                                     <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <h3>{item.name}</h3>

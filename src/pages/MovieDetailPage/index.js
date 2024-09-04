@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PhimDeCu from "../Home/component/PhimDeCu";
+import PhimDeCuMoi from "./component/PhimDeCuMoi";
 import PhimLienQuan from "./component/FilmLienQuan";
 import { Link } from "react-router-dom";
 import "./movie.scss";
@@ -8,7 +8,6 @@ import { FaChevronRight } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
-import { IoIosPlayCircle } from "react-icons/io";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { IoMdArrowDropup } from "react-icons/io";
@@ -83,7 +82,7 @@ function MovieDetailPage() {
         const data = await response.json();
         setMovie(data.movie);
         setEpisodes(data.episodes);
-        console.log(comments);
+   
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
@@ -366,7 +365,7 @@ function MovieDetailPage() {
           <PhimLienQuan />
         </div>
         <div>
-          <PhimDeCu />
+          <PhimDeCuMoi />
         </div>
       </div>
     </div>

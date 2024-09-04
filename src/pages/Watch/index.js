@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PhimDeCu from "../Home/component/PhimDeCu";
+import PhimDeCuMoi from "../MovieDetailPage/component/PhimDeCuMoi";
 import PhimLienQuan from "../MovieDetailPage/component/FilmLienQuan";
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
@@ -26,18 +26,58 @@ import avata4 from "../../image/avata4.jpg";
 import OffQC from "../../image/OffQC.webp";
 import "./watch.scss";
 
+const initialComments = [
+    {
+        id: 1,
+        name: "Lan Nguyễn",
+        cmt: "phim hay",
+    },
+    {
+        id: 2,
+
+        cmt: "phim hay",
+        name: "Trung Nguyễn",
+
+    },
+    {
+        id: 3,
+
+        cmt: "phim hay",
+        name: "Oanh Kiều",
+
+    },
+    {
+        id: 4,
+        cmt: "phim hay",
+        name: "Hải Nguyễn",
+
+    },
+];
+
 function Watch() {
     const { slug } = useParams();
     const [movie, setMovie] = useState(null);
     const [episodes, setEpisodes] = useState(null);
+
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("Mới nhất");
+    const [selectedOption, setSelectedOption] = useState('Mới nhất');
+    const [comments, setComments] = useState(initialComments);
+    const [comment, setComment] = useState('');
+    const [isFirstFocus, setIsFirstFocus] = useState(true);
+    const [isFocused, setIsFocused] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
         setIsOpen(false);
+    };
+    const handlePostComment = () => {
+        if (comment.trim()) {
+            const newComment = { id: comments.length + 1, name: "Tên Người Dùng", cmt: comment };
+            setComments([newComment, ...comments]);
+            setComment('');
+        }
     };
 
     const [isActive, setIsActive] = useState(true);
@@ -49,7 +89,6 @@ function Watch() {
                 console.log(data);
                 setMovie(data.movie);
                 setEpisodes(data.episodes);
-                console.log(data.episodes);
             } catch (error) {
                 console.error("Error fetching movie details:", error);
             }
@@ -73,7 +112,7 @@ function Watch() {
         return (
             <div className="list-server">
                 <div className="server-group">
-                    <span> <FaDatabase  className="icon-data"/>Danh sách tập #PM</span>
+                    <span> <FaDatabase className="icon-data" />Danh sách tập #PM</span>
                     <ul>
                         {episodes.map(
                             (episode, index) =>
@@ -88,7 +127,7 @@ function Watch() {
                                             })
                                             .map((item, idx) => (
                                                 <button
-                                                    className={`name-chapter ${idx === 0 ? "first-item" : ""}`}  key={idx}
+                                                    className={`name-chapter ${idx === 0 ? "first-item" : ""}`} key={idx}
                                                 >
                                                     {item.name}
                                                 </button>
@@ -104,9 +143,7 @@ function Watch() {
 
     return (
         <div className="watch-container">
-            <div className="block-note">
-                Truy cập PhimMoiPlus.Net nếu bạn không vào được PhimMoiChill{" "}
-            </div>
+            <div class="block-note">Truy cập <font color="red">PhimMoiPlus.Net</font> sẽ chuyển tới link PhimMoiChill mới nhất</div>
             <div className="breadcrumb">
                 <span itemProp="name">
                     <FaHome className="item" />
@@ -282,93 +319,69 @@ function Watch() {
                 </div>
 
 
-                {/* <div className="comment">
+                <div className="comment">
                     <div className="content-cmt">
                         <div className="header-cmt">
-                            <div className="number">1 bình luận </div>
+                            <div className="number">{comments.length} bình luận</div>
                             <div className="sort">
                                 <span> Sắp xếp theo</span>
                                 <button className="dropbtn" onClick={toggleDropdown}>{selectedOption}
                                     <IoMdArrowDropup className="up" />
                                     <IoMdArrowDropdown className="down" />
                                 </button>
-                                {isOpen && (
-                                    <div className="dropdown-content">
-
-                                        <li onClick={() => handleOptionClick('Mới nhất')}>Mới nhất</li>
-
-                                        <li onClick={() => handleOptionClick('Cũ nhất')}>Cũ nhất</li>
-                                    </div>
-                                )}
                             </div>
                         </div>
-
-
-
                         <div className="write-cmt">
-                            <img src={avataImage} alt="avata" />
-                            <input type="text" placeholder="Viết bình luận"></input>
+                            <img src={avataImage} alt="avata1" />
+                            <div className="text-btn">
+                                <input
+                                    type="text"
+                                    value={comment}
+                                    placeholder="Viết bình luận..."
+                                    onFocus={() => {
+                                        if (isFirstFocus) {
+                                            setIsFirstFocus(false);
+                                        }
+                                        setIsFocused(true);
+                                    }}
+                                    onBlur={() => setIsFocused(false)}
+                                    onChange={(e) => setComment(e.target.value)}
+                                />
+                                {isFocused && !isFirstFocus && (
+                                    <div className="btn-cmt">
+                                        <button className="push" onClick={handlePostComment}>Đăng</button>
+                                    </div>
+
+                                )}
+
+                            </div>
                         </div>
                         <div className="list-cmt">
-                            <div className="cmt-item">
-                                <img src={avata2} alt="avata2" />
-                                <div className="item-content">
-                                    <span className="name">Mì Tôm Bóng Đá</span>
-                                    <p className="item-decs">Phim hay</p>
-                                    <div className="feeling">
-                                        <p className="like">Thích</p>
-                                        <span>.</span>
-                                        <p className="reply">Phản hồi</p>
-                                        <span>.</span>
-                                        <p className="time">1 tuần</p>
+                            {comments.map((cmt, index) => (
+                                <div key={cmt.id} className="cmt-item">
+                                    <img src={avata2} alt="avata2" />
+                                    <div className="item-content">
+                                        <span className="name">{cmt.name}</span>
+                                        <p className="item-decs">{cmt.cmt}</p>
+                                        <div className="feeling">
+                                            <p className="like">Thích</p>
+                                            <span>.</span>
+                                            <p className="reply">Phản hồi</p>
+                                            <span>.</span>
+                                            <p className="time">1 tuần</p>
+                                        </div>
                                     </div>
-
                                 </div>
-
-                            </div>
-                            <div className="cmt-item">
-                                <img src={avata4} alt="avata4" />
-                                <div className="item-content">
-                                    <span className="name">Lan Nguyễn</span>
-                                    <p className="item-decs">Phim hay</p>
-                                    <div className="feeling">
-                                        <p className="like">Thích</p>
-                                        <span>.</span>
-                                        <p className="reply">Phản hồi</p>
-                                        <span>.</span>
-                                        <p className="time">1 tuần</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div className="cmt-item">
-                                <img src={avata3} alt="avata3" />
-                                <div className="item-content">
-                                    <span className="name">Ali Ba Ba</span>
-                                    <p className="item-decs">Phim hay</p>
-                                    <div className="feeling">
-                                        <p className="like">Thích</p>
-                                        <span>.</span>
-                                        <p className="reply">Phản hồi</p>
-                                        <span>.</span>
-                                        <p className="time">6 ngày</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
+                            ))}
                         </div>
-                        <div className="footer-cmt">
 
-                        </div>
                     </div>
-                </div> */}
+                </div>
                 <div>
                     <PhimLienQuan />
                 </div>
                 <div>
-                    <PhimDeCu />
+                    <PhimDeCuMoi />
                 </div>
 
             </div>

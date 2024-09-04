@@ -1,9 +1,10 @@
 .movie-recent {
     margin: 20px 0 0;
-    padding: 10px 0 15px 0;
+    padding: 10px 0 0;
     border-top: 1px solid #4c4c4c;
 
     .movie__heading {
+        overflow: hidden;
         margin: 15px 0 20px;
 
         p {
@@ -12,6 +13,7 @@
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 15px;
+            margin-top: 0;
             padding: 16px 0;
             color: #ff8a00;
 
@@ -26,7 +28,6 @@
         position: relative;
         overflow: hidden;
         width: 100%;
-        margin-left: 8px;
 
         .slick-next,
         .slick-prev {
@@ -43,7 +44,6 @@
             position: absolute;
             top: 50%;
             font-size: 80px;
-            opacity: .6;
             color: #ff9601;
             margin-top: -35px;
             z-index: 100;
@@ -56,11 +56,15 @@
             }
         }
 
-        .slick-next {
-            right: 50px;
+        .slick-prev {
+            left: -18px;
         }
 
-        .movie__item1 {
+        .slick-next {
+            right: 40px !important;
+        }
+
+        .movie__item {
             float: left;
             width: 20%;
             position: relative;
@@ -68,7 +72,6 @@
             list-style: none;
 
             &:hover {
-
                 .play-movie {
                     opacity: .8;
                     transform: scale(1);
@@ -76,22 +79,43 @@
                 }
             }
 
-            .lable1 {
+            .lable {
                 position: absolute;
                 padding: 5px;
                 font-size: 11px;
                 color: #fff;
+                background: #1b2a39;
+                border-bottom: 2px solid #bb3c2f;
+                border: 1px solid #1b2a3900;
                 z-index: 2;
-                left: 0;
-                background: #ff9601;
-                border-radius: 0 5px 5px 0;
+                font-weight: 400;
+                background-size: 200% 100%;
+                background-image: linear-gradient(to right, #C02425 0%, #F0CB35 51%, #C02425 100%);
+                transition: .7s;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: .25em;
 
+
+                &:after {
+                    content: '';
+                    border-bottom: 6px solid #dd8b52;
+                    border-left: 6px solid transparent;
+                    display: block;
+                    border-right: 6px solid transparent;
+                    bottom: -10px;
+                    left: 50%;
+                    position: absolute;
+                    transform: translate(-50%, -50%) rotate(180deg);
+                }
             }
 
             .movie__image {
                 display: block;
-                margin: 0 15px 0 0;
+                margin: 0 8px;
                 overflow: hidden;
+                ;
                 height: 117px !important;
 
                 &:hover {
@@ -103,12 +127,9 @@
                 img {
                     width: 100%;
                     object-fit: cover;
-                    transition: all .4s ease-in-out;
+                    transition: all .3s ease-in-out;
                     vertical-align: middle;
                     border: 0;
-
-
-
                 }
 
                 h3 {

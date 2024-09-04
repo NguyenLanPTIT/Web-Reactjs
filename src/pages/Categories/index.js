@@ -7,13 +7,13 @@ import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import "./categories.scss";
 const apiMap = {
-  "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
-  "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64",
-  "hoat-hinh": "https://phimapi.com/v1/api/danh-sach/hoat-hinh?skip=1&limit=64",
-  "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows?skip=1&limit=64",
+  "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le",
+  "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo",
+  "hoat-hinh": "https://phimapi.com/v1/api/danh-sach/hoat-hinh",
+  "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows",
   "phim-hot": [
-    "https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64",
-    "https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64"
+    "https://phimapi.com/v1/api/danh-sach/phim-le",
+    "https://phimapi.com/v1/api/danh-sach/phim-bo"
   ]
 };
 
@@ -48,8 +48,9 @@ const CategoryPage = () => {
       })
       .catch((error) => console.error("Error fetching movies:", error));
   }, [category, currentPage]);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (

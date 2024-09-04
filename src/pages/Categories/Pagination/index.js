@@ -1,43 +1,52 @@
-import React from 'react';
+import React from "react";
+import { GrFormPreviousLink } from "react-icons/gr";
+import { GrFormNextLink } from "react-icons/gr";
 import "./pagination.scss";
 
-
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pageNumbers = [];
-  const pagesToShow = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
-  let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+  const maxPageButton = 6;
 
-  if (endPage - startPage + 1 < pagesToShow) {
-    startPage = Math.max(1, endPage - pagesToShow + 1);
-  }
+  const changePage = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      onPageChange(newPage);
+    }
+  };
 
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
+  const getPaginatedData = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageButton / 2));
+    let endPage = startPage + maxPageButton - 1;
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxPageButton + 1);
+    }
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  };
 
   return (
     <div className="pagination">
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => changePage(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Prev
+        <GrFormPreviousLink />
       </button>
-      {pageNumbers.map(number => (
+      {getPaginatedData().map((page) => (
         <button
-          key={number}
-          className={number === currentPage ? 'active' : ''}
-          onClick={() => onPageChange(number)}
+          key={page}
+          onClick={() => changePage(page)}
+          className={currentPage === page ? "active" : ""}
         >
-          {number}
+          {page}
         </button>
       ))}
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => changePage(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        Next
+        <GrFormNextLink />
       </button>
     </div>
   );
