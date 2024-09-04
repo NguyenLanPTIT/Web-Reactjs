@@ -10,7 +10,7 @@ function Header() {
   return (
     <>
       <div className="header">
-        <div className='content'>
+        <div className='content-header'>
         <div className="nav">
           <div className='container-nav'>
           <div className="nav__img">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { IoIosPlayCircle } from "react-icons/io";
 import "./phimmoi.scss";
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
@@ -21,7 +20,7 @@ function PhimMoi() {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                const movies2024 = data.items.filter(movie => movie.year === 2024||movie.year === 2020);
+                const movies2024 = data.items.filter(movie => movie.year === 2024 || movie.year === 2020);
                 setMovies(movies2024);
                 setDisplayItems(movies2024);
             })
@@ -42,8 +41,8 @@ function PhimMoi() {
                     <h2><Link className='link' to="/categories/hoat-hinh">PHIM MỚI SẮP CHIẾU</Link></h2>
                 </div>
                 <button><Link className='link-btn' to="/categories/hoat-hinh">Xem tất cả</Link>
-                        <FaCaretRight />
-                    </button>
+                    <FaCaretRight />
+                </button>
             </div>
             <div className="movie__list">
                 {displayItems.map(item => (
@@ -53,7 +52,8 @@ function PhimMoi() {
                             <div className='movie__image'>
                                 <img src={item.poster_url} alt={item.name} />
                                 <h3>{item.name}</h3>
-                                <IoIosPlayCircle className="play-icons" />
+                                <div className='play-movie'>
+                                </div>
                             </div>
                         </Link>
 

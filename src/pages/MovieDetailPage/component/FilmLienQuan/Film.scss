@@ -1,5 +1,7 @@
 .movie {
+    padding-top: 20px;
     .movie__heading {
+        margin: 15px 0 20px;
         h2 {
             font-size: 25px;
             float: left;
@@ -7,9 +9,7 @@
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 15px;
-            padding: 16px 0;
             color: #ff8a00;
-            font-family: inherit;
 
         }
     }

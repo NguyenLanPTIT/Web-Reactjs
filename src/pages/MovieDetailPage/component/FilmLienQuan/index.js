@@ -57,7 +57,7 @@ function MovieSlider() {
         <>
             <div className='movie'>
                 <div className='movie__heading'>
-                    <h2>PHIM ĐỀ CỬ</h2>
+                    <h2>PHIM LIÊN QUAN</h2>
                 </div>
                 <Slider {...settings} className='slider'>
                     {data.map(item => (
@@ -69,7 +69,6 @@ function MovieSlider() {
                                     <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <h3>{item.name}</h3>
                                     <IoIosPlayCircle className="play-icons" />
-
                                 </div>
                             </Link>
 

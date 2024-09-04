@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../PhimBo.scss";
-import { IoIosPlayCircle } from "react-icons/io";
+
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
 
@@ -81,8 +81,7 @@ function PhimLe() {
         </div>
         <div className="movie__list">
           {displayItems.map((item, index) => (
-            <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
-              <Link className="link" to={`/movies/${item.slug}`}>
+              <Link  key={index} className={`movie__item ${index === 0 ? 'large' : ""}`} to={`/movies/${item.slug}`}>
                 <span className="lable">HD-{item.lang}</span>
                 <div className="movie__image">
                   <img
@@ -90,10 +89,10 @@ function PhimLe() {
                     alt={item.name}
                   />
                   <h3>{item.name}</h3>
-                  <IoIosPlayCircle className="play-icons" />
+                  <div className='play-movie'>
+                  </div>
                 </div>
               </Link>
-            </div>
           ))}
         </div>
       </div>

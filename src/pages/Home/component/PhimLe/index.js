@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { IoIosPlayCircle } from "react-icons/io";
 import { FaCaretRight } from "react-icons/fa";
 
+import { FaPlay } from "react-icons/fa";
 
 
 const listButton = [
@@ -75,14 +76,15 @@ function PhimLe() {
                     </button>
                 </div>
                 <div className="movie__list">
-                    {displayItems.map((item,index) => (
+                    {displayItems.map((item, index) => (
                         <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
                             <Link className="link" to={`/movies/${item.slug}`}>
                                 <span className="lable">HD-{item.lang}</span>
                                 <div className='movie__image'>
                                     <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <h3>{item.name}</h3>
-                                    <IoIosPlayCircle className="play-icons" />
+                                    <div className='play-movie'>
+                                    </div>
                                 </div>
                             </Link>
                         </div>

@@ -1,4 +1,4 @@
-import { IoIosPlayCircle } from "react-icons/io";
+
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import "../PhimBo.scss";
@@ -96,7 +96,8 @@ function Movies() {
                             <div className='movie__image'>
                                 <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                 <h3>{item.name}</h3>
-                                <IoIosPlayCircle className="play-icons" />
+                                <div className='play-movie'>
+                                </div>
 
                             </div>
                         </Link>

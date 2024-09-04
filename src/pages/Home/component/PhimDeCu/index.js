@@ -1,11 +1,20 @@
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaCaretRight } from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
-import { IoIosPlayCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { FaCaretLeft } from "react-icons/fa";
 
 import "./phimdecu.scss"
+
+const PrevArrow = ({ onClick }) => (
+    <button className="slick-prev custom-arrow " onClick={onClick}><FaCaretLeft /></button>
+  );
+  
+  const NextArrow = ({ onClick }) => (
+    <button className="slick-next custom-arrow  " onClick={onClick}><FaCaretRight /></button>
+  );
 function MovieSlider() {
     const settings = {
         dots: false,
@@ -15,6 +24,9 @@ function MovieSlider() {
         slidesToScroll: 5,
         autoplay: true,
         // autoplaySpeed: 2000
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        arrows: true
     };
     function getLabel(movie) {
         if (movie.episode_current) {
@@ -56,7 +68,7 @@ function MovieSlider() {
     return (
         <>
             <div className='movie'>
-                <div className='movie__heading'>
+                <div className='movie__heading mar-8'>
                     <h2>PHIM ĐỀ CỬ</h2>
                 </div>
                 <Slider {...settings} className='slider'>
@@ -68,8 +80,8 @@ function MovieSlider() {
                                 <div className='movie__image'>
                                     <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <h3>{item.name}</h3>
-                                    <IoIosPlayCircle className="play-icons" />
-
+                                    <div className='play-movie'>
+                                    </div>
                                 </div>
                             </Link>
 

@@ -214,14 +214,12 @@ function MovieDetailPage() {
         <div className="image">
           <div className="movie" style={{ backgroundImage: `url(${movie.poster_url})` }}>
             <img className="poster" src={movie.thumb_url} alt={movie.name} />
-            <Link className='link-btn' to={`/xem/${movie.slug}`}>
-              <IoIosPlayCircle className="play-icons" /></Link>
+            <Link className='play-icons' to={`/xem/${movie.slug}`}></Link>
             <div className="text">
               <h1>{movie.name}</h1>
               <h2>{movie.origin_name} ({movie.year})</h2>
               <div className="list-btn">
                 <button className="trailer" onClick={toggleTrailer}> <FaYoutube className="item" />Trailer</button>
-
                 <button className="play"><FaRegCirclePlay className="item" />Xem phim</button>
               </div>
             </div>
