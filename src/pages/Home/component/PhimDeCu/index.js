@@ -53,7 +53,6 @@ function MovieSlider() {
                 const moviesThree = await responseThree.json();
                 const moviesFour = await responseFour.json();
 
-                // Trộn và xáo trộn dữ liệu
                 const combinedMovies = [...moviesOne.data.items, ...moviesTwo.data.items, ...moviesThree.data.items, ...moviesFour.data.items];
                 const shuffledMovies = combinedMovies.sort(() => 0.5 - Math.random());
                 setMovies(shuffledMovies);

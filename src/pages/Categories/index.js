@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
 import "./categories.scss";
 const apiMap = {
   "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le",
   "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo",
-  "hoat-hinh": "https://phimapi.com/v1/api/danh-sach/hoat-hinh",
+  "phim-sap-chieu": "https://phimapi.com/v1/api/danh-sach/hoat-hinh",
   "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows",
-  "phim-hot": [
-    "https://phimapi.com/v1/api/danh-sach/phim-le",
-    "https://phimapi.com/v1/api/danh-sach/phim-bo"
-  ]
 };
 
 const CategoryPage = () => {
   const { category } = useParams();
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [titlePage, setTitlePage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const navigate = useNavigate();
   const handleReload = () => {
     navigate(0);
-  }
+  };
   useEffect(() => {
-    const apiURL = `${apiMap[category] || apiMap["default"]}?page=${currentPage}&limit=25`;
+    const apiURL = `${apiMap[category] || apiMap["default"]
+      }?page=${currentPage}&limit=25`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
@@ -43,14 +39,16 @@ const CategoryPage = () => {
           }))
 
         );
+        console.log(moviesData);
         setTitlePage(data.data.titlePage);
-        setTotalPages(data.data.totalPages);
+        setTotalPages(data.data.params.pagination.totalPages);
       })
       .catch((error) => console.error("Error fetching movies:", error));
   }, [category, currentPage]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    navigate(`/categories/${category}/page/${newPage}`);
   };
 
   return (
@@ -58,7 +56,13 @@ const CategoryPage = () => {
       <div className="container">
         <div className="detail__heading">
           <h2 className="heading">
-            {titlePage === 'TV Shows' ? "PHIM CHIẾU RẠP" : titlePage.toUpperCase()}
+            {
+              titlePage === "TV Shows"
+                ? "PHIM CHIẾU RẠP"
+                : titlePage === "Phim Hoạt Hình"
+                  ? "PHIM SẮP CHIẾU"
+                  : titlePage.toUpperCase()
+            }
           </h2>
           <ul className="order">
             <li>
@@ -149,51 +153,76 @@ const CategoryPage = () => {
               </select>
             </li>
             <li>
-              <span className="submit-filter" >
-                Tìm kiếm
-              </span>
+              <span className="submit-filter">Tìm kiếm</span>
             </li>
           </ul>
         </div>
         <div className="text">
           <div className="breadcrumb">
             <div itemProp="itemListElement" className="title">
-              <span itemProp="name" >
-                <FaHome /><Link className="title-link" to="/movies"> Phim Mới</Link><FaChevronRight />
+              <span itemProp="name">
+                <FaHome />
+                <Link className="title-link" to="/movies">
+                  {" "}
+                  Phim Mới
+                </Link>
+                <FaChevronRight />
               </span>
-              <li>{titlePage === 'TV Shows' ? "Phim Chiếu Rạp" : titlePage}</li>
+              <li>
+                {" "}
+                {
+                  titlePage === "TV Shows"
+                    ? "Phim Chiếu Rạp"
+                    : titlePage === "Phim Hoạt Hình"
+                      ? "Phim Sắp Chiếu"
+                      : titlePage
+                }
+              </li>
             </div>
-
           </div>
           <div className="desc">
             Khám phá danh sách
             <Link className="desc-detail" to="" onClick={handleReload}>
-              <strong>{titlePage === 'TV Shows' ? "Phim Chiếu Rạp" : titlePage}</strong>{" "}
+              <strong>
+                {" "}
+                {
+                  titlePage === "TV Shows"
+                    ? "Phim Chiếu Rạp"
+                    : titlePage === "Phim Hoạt Hình"
+                      ? "Phim Sắp Chiếu"
+                      : titlePage
+                }
+              </strong>{" "}
             </Link>
-            mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải
-            xuống hơn 100.000+ bộ phim le Vietsub, thuyết minh đang thịnh hành
-            và hay nhất tháng 08 2024.
+            mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải xuống
+            hơn 100.000+ bộ phim le Vietsub, thuyết minh đang thịnh hành và hay
+            nhất tháng 08 2024.
           </div>
           <div className="clear"></div>
         </div>
         <div className="heading__content">
           <div className="card">
             {movies.map((movie) => (
-                <Link  key={movie.id} className="card__item" to={`/movies/${movie.slug}`}>
-                  <span className="lable">HD-{movie.lang}</span>
-                  <div className="card__image">
-                    <img
-                      src={`https://img.phimapi.com/${movie.thumbnail}`}
-                      alt={movie.title}
-                      className="card-thumbnail"
-                    />
-                    <h3 className="card__title">{movie.title}</h3>
-                    <div className="play-movie"></div>
-                  </div>
-                </Link>
+              <Link
+                key={movie.id}
+                className="card__item"
+                to={`/movies/${movie.slug}`}
+              >
+                <span className="lable">HD-{movie.lang}</span>
+                <div className="card__image">
+                  <img
+                    src={`https://img.phimapi.com/${movie.thumbnail}`}
+                    alt={movie.title}
+                    className="card-thumbnail"
+                  />
+                  <h3 className="card__title">{movie.title}</h3>
+                  <div className="play-movie"></div>
+                </div>
+              </Link>
             ))}
           </div>
-          <Pagination 
+
+          <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}

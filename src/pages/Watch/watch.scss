@@ -1,6 +1,6 @@
 .watch-container {
     padding: 30px 10px 10px;
-    margin: 0 auto;
+    margin: -40px auto 0;
     background: #222;
     overflow: hidden;
     max-width: 980px;
@@ -8,13 +8,12 @@
     font-size: 14px;
     color: #dcdcdc;
 
-
     .block-note {
         margin: 10px 0 0;
         border: 1px solid #ff9601;
         background: #000;
         padding: 10px;
-       
+
     }
 
     .breadcrumb {
@@ -461,7 +460,8 @@
         .server-group {
             margin: 0;
             padding: 0;
-            .icon-data{
+
+            .icon-data {
                 margin-right: 4px;
             }
 
@@ -495,9 +495,10 @@
                             text-decoration: none;
                             background-color: #ff9601;
                         }
-                      
+
                     }
-                    .first-item{
+
+                    .first-item {
                         background: #ff9601;
                     }
                 }
@@ -697,6 +698,7 @@
 
             }
         }
+
         .comment {
             background: #fff;
             padding: 5px;

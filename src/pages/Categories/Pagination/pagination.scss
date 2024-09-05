@@ -21,6 +21,11 @@
         &:hover {
             color: #ff6901;
         }
+        &:focus{
+            border:1px solid  #ff6901;
+            color: #ff6901;
+        
+        }
         &:active{
             border:1px solid  #ff6901;
             color: #ff6901;

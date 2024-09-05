@@ -15,14 +15,12 @@ function PhimMoi() {
     const [displayItems, setDisplayItems] = useState([]);
 
     useEffect(() => {
-        fetch('https://phimapi.com/danh-sach/phim-moi-cap-nhat')
+        fetch('https://phimapi.com/v1/api/danh-sach/hoat-hinh?skip=1&limit=64')
 
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                const movies2024 = data.items.filter(movie => movie.year === 2024 || movie.year === 2020);
-                setMovies(movies2024);
-                setDisplayItems(movies2024);
+                setMovies(data.data.items);
+                setDisplayItems(data.data.items);
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
@@ -38,19 +36,18 @@ function PhimMoi() {
         <div className='movie'>
             <div className="movie__heading">
                 <div className="heading__content">
-                    <h2><Link className='link' to="/categories/hoat-hinh">PHIM MỚI SẮP CHIẾU</Link></h2>
+                    <h2><Link className='link' to="/categories/phim-sap-chieu">PHIM MỚI SẮP CHIẾU</Link></h2>
                 </div>
-                <button><Link className='link-btn' to="/categories/hoat-hinh">Xem tất cả</Link>
+                <li className='btn-all'><Link className='link-btn' to="/categories/phim-sap-chieu">Xem tất cả</Link>
                     <FaCaretRight />
-                </button>
+                </li>
             </div>
             <div className="movie__list">
                 {displayItems.map(item => (
                     <div key={item._id} className="movie__item">
                         <Link className="link" to={`/movies/${item.slug}`}>
-                            <span className="text-lable"></span>
                             <div className='movie__image'>
-                                <img src={item.poster_url} alt={item.name} />
+                            <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                 <h3>{item.name}</h3>
                                 <div className='play-movie'>
                                 </div>

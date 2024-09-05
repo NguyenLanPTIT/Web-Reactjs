@@ -4,6 +4,9 @@
     margin: 0 0 20px;
 
     .content-header {
+        margin: 0 auto;
+        width: auto;
+        max-width: 1500px;
         .nav {
             margin: 0 auto;
             width: auto;
@@ -82,6 +85,9 @@
                                 border: none;
                                 color: #fff;
                                 list-style: none;
+                                &:hover{
+                                    color: #ff9601;
+                                }
                                 p{
                                     line-height: 35px;
                                     font-size: 14px;
@@ -89,7 +95,11 @@
                                     border: none;
                                     color: #fff;
                                     margin: 0;
+                                    &:hover{
+                                        color: #ff9601;
+                                    }
                                 }
+
                             }
                         }
                         .span-6{

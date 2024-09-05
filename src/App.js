@@ -23,6 +23,7 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="/post/:info" element={<FootLink />} />
+                    <Route path="/categories/:category/page/:pageNumber" element={<Categories />} /> 
                 </Routes>
             </Layout>
         </Router>

@@ -68,19 +68,16 @@ function PhimBo() {
                             </Link>
                         </h2>
                         <div className="heading__type">
-                            {listButton.map((item, i) => (
-                                <button key={i} onClick={() => handleCategoryClick(item.name)}>
-                                    {item.name}
-                                </button>
-                            ))}
+                            { listButton.map((item, i) => <li key={i} onClick={() => handleCategoryClick(item.name)}>
+                            <p>{item.name}</p></li>)}
                         </div>
                     </div>
-                    <button>
+                    <li className='btn-all'>
                         <Link className="link-btn" to="/categories/phim-bo">
                             Xem tất cả
                         </Link>
                         <FaCaretRight />
-                    </button>
+                    </li>
                 </div>
                 <div className="movie__list">
                     {displayItems.map((item, index) => (

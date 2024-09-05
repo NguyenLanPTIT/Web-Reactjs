@@ -77,16 +77,16 @@ function Movies() {
                     <div className="heading__type">
                         {
                             listButton.map((item, i) => (
-                                <button key={i} onClick={() => setCurrentType(item.name)}>
-                                    {item.type}
-                                </button>
+                                <li key={i} onClick={() => setCurrentType(item.name)}>
+                                    <p>{item.type}</p>
+                                </li>
                             ))
                         }
                     </div>
                 </div>
-                <button><Link className="link-btn" to="/categories/phim-hot">Xem tất cả</Link>
+                <li className='btn-all'><Link className="link-btn" to="/categories/phim-hot">Xem tất cả</Link>
                     <FaCaretRight />
-                </button>
+                </li>
             </div>
             <div className="movie__list">
                 {displayItems.map((item, index) => (

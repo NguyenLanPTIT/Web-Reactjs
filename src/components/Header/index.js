@@ -35,7 +35,7 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="link-title" to="/categories/phim-le">
+                  <Link className="link-title" to="/">
                     THỂ LOẠI
                   </Link>
                   <ul className="sub-menu span-6">
@@ -84,7 +84,7 @@ function Header() {
                   </ul>
                 </li>
                 <li>
-                  <Link className="link-title" to="/categories/phim-le">
+                  <Link className="link-title" to="/">
                     QUỐC GIA
                   </Link>
 
@@ -148,7 +148,7 @@ function Header() {
                   </ul>
                 </li>
                 <li>
-                  <Link className="link-title" to="/categories/phim-le">
+                  <Link className="link-title" to="/">
                     NĂM PHÁT HÀNH
                   </Link>
 
@@ -323,12 +323,12 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="link-title" to="/categories/phim-le">
+                  <Link className="link-title" to="/categories/phim-sap-chieu">
                     TRAILER
                   </Link>
                 </li>
                 <li>
-                  <Link className="vip link-title" to="/categories/phim-le">
+                  <Link className="vip link-title" to="/">
                     TOP PHIM
                   </Link>
                   <ul className="sub-menu">

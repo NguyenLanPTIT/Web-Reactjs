@@ -2,13 +2,14 @@ import React from "react";
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
 import "./pagination.scss";
-
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const maxPageButton = 6;
+
 
   const changePage = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       onPageChange(newPage);
+
     }
   };
 
@@ -27,12 +28,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <div className="pagination">
-      <button
-        onClick={() => changePage(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        <GrFormPreviousLink />
-      </button>
+
+      {currentPage > 1 && (
+        <button onClick={() => changePage(currentPage - 1)}> <GrFormPreviousLink /></button>
+      )}
       {getPaginatedData().map((page) => (
         <button
           key={page}
@@ -42,9 +41,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           {page}
         </button>
       ))}
+      
       <button
         onClick={() => changePage(currentPage + 1)}
-        disabled={currentPage === totalPages}
       >
         <GrFormNextLink />
       </button>
