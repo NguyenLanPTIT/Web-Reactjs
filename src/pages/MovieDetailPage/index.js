@@ -190,7 +190,7 @@ function MovieDetailPage() {
             <span itemProp="name">
               <FaHome />
               <p>Xem Phim</p>
-              <FaAngleRight />
+              <FaAngleRight className="item" />
             </span>
           </Link>
 

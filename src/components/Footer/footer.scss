@@ -23,6 +23,7 @@
                 margin: 0 0 5px;
                 font-weight: 700;
                 color: #ff8a00;
+                font-size: 14px;
             }
 
             ul {
@@ -32,6 +33,9 @@
                 li {
                     list-style: none;
                     cursor: pointer;
+                    color: #ffffffd1;
+                    font-size: 14px;
+
 
                     &:hover {
                         color: #ff8a00;

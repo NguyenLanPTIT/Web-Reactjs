@@ -121,24 +121,24 @@ const Footer = () => (
         <p>Phim Hot</p>
         <ul>
           <li>
-          <Link className="title-link" to="/post/ve-chung-toi">
-            {" "}
-            Về chúng tôi
-          </Link></li>
+            <Link className="title-link" to="/post/ve-chung-toi">
+              {" "}
+              Về chúng tôi
+            </Link></li>
           <li>
-          <Link className="title-link" to="/movies">
-            {" "}
-            Phimmoi
-          </Link></li>
+            <Link className="title-link" to="/movies">
+              {" "}
+              Phimmoi
+            </Link></li>
           <li>Sitemap</li>
         </ul>
       </div>
       <div className="column">
-      <p>Trợ giúp</p>
+        <p>Trợ giúp</p>
         <ul>
           <li>Hỏi đáp</li>
           <li>
-          <Link className="title-link" to="/post/lien-he">
+            <Link className="title-link" to="/post/lien-he">
               {" "}
               Liên hệ
             </Link></li>
@@ -146,20 +146,20 @@ const Footer = () => (
         </ul>
       </div>
       <div className="column">
-      <p>Thông tin</p>
+        <p>Thông tin</p>
         <ul>
           <li>
-          <Link className="title-link" to="/post/dieu-khoan-su-dung">
+            <Link className="title-link" to="/post/dieu-khoan-su-dung">
               {" "}
               Điều khoản sử dụng
             </Link></li>
           <li>
-          <Link className="title-link" to="/post/chinh-sach-rieng-tu">
+            <Link className="title-link" to="/post/chinh-sach-rieng-tu">
               {" "}
               Chính sách riêng tư
             </Link></li>
           <li>
-          <Link className="title-link" to="/post/khieu-nai-ban-quyen">
+            <Link className="title-link" to="/post/khieu-nai-ban-quyen">
               {" "}
               Khiếu nại bản quyền
             </Link></li>

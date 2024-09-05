@@ -168,7 +168,7 @@ const CategoryPage = () => {
                 <span itemProp="name">
                   <FaHome />
                   <p>Phim Mới</p>
-                  <FaAngleRight />
+                  <FaAngleRight className="item" />
                 </span>
               </Link>
 

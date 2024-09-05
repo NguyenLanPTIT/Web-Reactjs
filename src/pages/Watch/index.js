@@ -21,9 +21,9 @@ import { FaDatabase } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import avataImage from "../../image/avata.jpg";
 import avata2 from "../../image/avata2.png";
-import avata3 from "../../image/avata3.jpg";
-import avata4 from "../../image/avata4.jpg";
 import OffQC from "../../image/OffQC.webp";
+import { FaAngleRight } from "react-icons/fa6";
+
 import "./watch.scss";
 
 const initialComments = [
@@ -145,34 +145,28 @@ function Watch() {
         <div className="watch-container">
             <div class="block-note">Truy cập <font color="red">PhimMoiPlus.Net</font> sẽ chuyển tới link PhimMoiChill mới nhất</div>
             <div className="breadcrumb">
-                <span itemProp="name">
-                    <FaHome className="item" />
+                <li
+                    itemProp="itemListElement" className="title">
                     <Link className="title-link" to="/movies">
-                        {" "}
-                        PhimMoi
+                        <span itemProp="name">
+                            <FaHome />
+                            <p>Xem Phim</p>
+                            <FaAngleRight className="item"/>
+                        </span>
                     </Link>
-                    <FaChevronRight className="item" />
-                </span>
-                <span itemProp="name">
-                    <ul>
-                        {movie.category.map((category, index) => (
-                            <li className="item-category" key={index}>
-                                Phim {category.name}
-                                <FaChevronRight className="item" />
-                            </li>
-                        ))}
-                    </ul>
-                </span>
-                <span itemProp="name">
-                    <Link className="title-link" to="/categories/tv-shows">
-                        {" "}
-                        Phim Chiếu Rạp
-                    </Link>
-                    <FaChevronRight className="item" />
-                </span>
+
+                </li>
+                <li className="name" itemProp="name">
+                    {movie.category.map((category, index) => (
+                        <span className="item-category" key={index}>
+                            Phim {category.name}
+                            <FaAngleRight className="item" />
+                        </span>
+                    ))}
+                </li>
                 <li className="name-movie">
                     {" "}
-                    {movie.name} <FaChevronRight className="item" />
+                    {movie.name} <FaAngleRight className="item" />
                 </li>
                 <li className="chaper-movie">{movie.type === 'single' ? "Tập Full" : "Tập 1"}
                 </li>
@@ -182,7 +176,8 @@ function Watch() {
                     <div
                         className="movie"
                         style={{ backgroundImage: `url(${movie.poster_url})` }}
-                    ></div>
+                    >  </div>
+                    <div className="play-icons"></div>
                     <div className="control-player">
                         <input type="range" className="progress-bar" />
                         <div className="btn-player">
