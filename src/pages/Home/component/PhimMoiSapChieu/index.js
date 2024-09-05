@@ -48,7 +48,7 @@ function PhimMoi() {
                         <Link className="link" to={`/movies/${item.slug}`}>
                             <div className='movie__image'>
                             <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
-                                <h3>{item.name}</h3>
+                                <p>{item.name}</p>
                                 <div className='play-movie'>
                                 </div>
                             </div>

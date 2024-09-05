@@ -96,7 +96,7 @@ function PhimBo() {
                                         src={`https://img.phimapi.com/${item.poster_url}`}
                                         alt={item.name}
                                     />
-                                    <h3>{item.name}</h3>
+                                    <p>{item.name}</p>
                                     <div className="play-movie"></div>
                                 </div>
                             </Link>

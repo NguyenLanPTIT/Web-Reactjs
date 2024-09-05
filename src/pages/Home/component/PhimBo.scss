@@ -13,7 +13,7 @@
         .btn-all {
             float: right;
             background-color: #5d5d5d;
-            padding:8px 5px;
+            padding: 8px 5px;
             border-radius: 3px;
             color: #fff;
             font-weight: 700;
@@ -50,7 +50,7 @@
                     list-style: none;
                     float: left;
                     margin: 0;
-                
+
                     p {
                         color: #fff;
                         padding: 5px;
@@ -63,6 +63,7 @@
                         background: #504d49;
                         font-size: 14px;
                         font-weight: 500;
+
                         &:hover {
                             background-color: #ff8a00;
                             border-bottom: 2px solid #ff8a00;
@@ -85,7 +86,7 @@
         margin-right: -10px;
         position: relative;
         overflow: hidden;
-    
+
 
         .movie__item {
             float: left;
@@ -159,7 +160,7 @@
 
                 }
 
-                h3 {
+                p {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
@@ -174,6 +175,8 @@
                     font-size: 15px;
                     margin-top: 20px;
                     margin-bottom: 10px;
+                    font-weight: 550;
+                    outline: none;
 
                 }
 
