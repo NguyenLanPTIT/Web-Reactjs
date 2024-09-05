@@ -18,11 +18,13 @@
             box-sizing: border-box;
             display: block;
             justify-content: start;
+
             p {
                 margin: 0 0 5px;
                 font-weight: 700;
                 color: #ff8a00;
             }
+
             ul {
                 margin: 0;
                 padding: 0;
@@ -30,9 +32,8 @@
                 li {
                     list-style: none;
                     cursor: pointer;
-                    color: #ffffffd1;
-                    line-height: 2em;
-                    &:hover{
+
+                    &:hover {
                         color: #ff8a00;
                     }
 
@@ -41,9 +42,21 @@
                         color: #ffffffd1;
                         line-height: 2em;
                         font-weight: none;
-                        &:hover{
+                        font-size: 14px;
+
+                        &:hover {
                             color: #ff8a00;
                         }
+                    }
+
+                }
+
+                .no-active {
+                    cursor: auto;
+
+                    &:hover {
+                        color: #ffffffd1;
+
                     }
                 }
             }
@@ -69,6 +82,7 @@
                 color: #dcdcdc;
                 font-size: 14px;
                 line-height: 1.42857143;
+                font-weight: 500;
             }
         }
 
@@ -76,6 +90,7 @@
             p {
                 margin: 0 0 5px;
                 list-style: none;
+
                 .title-link {
                     text-decoration: none;
                     font-weight: 700;
@@ -84,7 +99,7 @@
                 }
             }
 
-            
+
         }
 
 

@@ -88,7 +88,7 @@ const Footer = () => (
           <li>
             <Link className="title-link" to="/categories/phim-trung-quoc">
               {" "}
-              Phim TRung Quốc
+              Phim Trung Quốc
             </Link>
           </li>
           <li>
@@ -163,7 +163,7 @@ const Footer = () => (
               {" "}
               Khiếu nại bản quyền
             </Link></li>
-          <li>© 2023 PhimChill.Net</li>
+          <li className="no-active">© 2023 PhimChill.Net</li>
         </ul>
       </div>
     </div>

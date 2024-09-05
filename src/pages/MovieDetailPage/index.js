@@ -4,7 +4,6 @@ import PhimDeCuMoi from "./component/PhimDeCuMoi";
 import PhimLienQuan from "./component/FilmLienQuan";
 import { Link } from "react-router-dom";
 import "./movie.scss";
-import { FaChevronRight } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
@@ -13,6 +12,8 @@ import { FaYoutube } from "react-icons/fa";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import avataImage from "../../image/avata.jpg";
+import { FaAngleRight } from "react-icons/fa6";
+
 import avata2 from '../../image/avata2.png';
 
 
@@ -82,7 +83,7 @@ function MovieDetailPage() {
         const data = await response.json();
         setMovie(data.movie);
         setEpisodes(data.episodes);
-   
+
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
@@ -182,31 +183,27 @@ function MovieDetailPage() {
   return (
     <div className="movie-container">
       <div className="breadcrumb">
-        <span itemProp="name">
-          <FaHome className="item" />
+
+        <li
+          itemProp="itemListElement" className="title">
           <Link className="title-link" to="/movies">
-            {" "}
-            Xem Phim
+            <span itemProp="name">
+              <FaHome />
+              <p>Xem Phim</p>
+              <FaAngleRight />
+            </span>
           </Link>
-          <FaChevronRight className="item" />
-        </span>
-        <span itemProp="name">
-          <ul>
-            {movie.category.map((category, index) => (
-              <li className="item-category" key={index}>
-                Phim {category.name}
-                <FaChevronRight className="item" />
-              </li>
-            ))}
-          </ul>
-        </span>
-        <span itemProp="name">
-          <Link className="title-link" to="/categories/tv-shows">
-            {" "}
-            Phim Chiếu Rạp
-          </Link>
-          <FaChevronRight className="item" />
-        </span>
+
+        </li>
+
+        <li className="name" itemProp="name">
+          {movie.category.map((category, index) => (
+            <span className="item-category" key={index}>
+              Phim {category.name}
+              <FaAngleRight className="item" />
+            </span>
+          ))}
+        </li>
         <li> {movie.name}</li>
       </div>
       <div className="info">
