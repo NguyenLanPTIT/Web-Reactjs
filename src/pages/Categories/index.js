@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import "./categories.scss";
+
 const apiMap = {
-  "phim-le": "https://phimapi.com/v1/api/danh-sach/phim-le",
-  "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo",
-  "phim-sap-chieu": "https://phimapi.com/v1/api/danh-sach/hoat-hinh",
-  "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows",
+  "phim-le": ["https://phimapi.com/v1/api/danh-sach/phim-le"],
+  "phim-bo": ["https://phimapi.com/v1/api/danh-sach/phim-bo"],
+  "phim-sap-chieu": ["https://phimapi.com/v1/api/danh-sach/hoat-hinh"],
+  "phim-chieu-rap": ["https://phimapi.com/v1/api/danh-sach/tv-shows"],
   "phim-hot": [
     "https://phimapi.com/v1/api/danh-sach/phim-le",
     "https://phimapi.com/v1/api/danh-sach/phim-bo"
@@ -26,28 +27,43 @@ const CategoryPage = () => {
   const handleReload = () => {
     navigate(0);
   };
+
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const apiURL = `${apiMap[category] || apiMap["default"]
-      }?page=${currentPage}&limit=25`;
-    fetch(apiURL)
-      .then((response) => response.json())
-      .then((data) => {
-        const moviesData = data.data.items;
+    const getData = async (apiURL) => {
+      try {
+        setLoading(true);
+        const result = await Promise.all(
+          apiURL.map((url) =>
+            fetch(`${url}?page=${currentPage}&limit=25`)
+          )
+        );
+
+        const data = await Promise.all(result.map((res) => res.json()));
+        const finalData = data.reduce((acc, current) => [...acc, ...current.data.items], []);
+
         setMovies(
-          moviesData.map((movie) => ({
+          finalData.map((movie) => ({
             id: movie._id,
             title: movie.name,
             thumbnail: movie.poster_url,
             lang: movie.lang || "No description available.",
             slug: movie.slug,
           }))
-
         );
-        console.log(moviesData);
-        setTitlePage(data.data.titlePage);
-        setTotalPages(data.data.params.pagination.totalPages);
-      })
-      .catch((error) => console.error("Error fetching movies:", error));
+
+        setTitlePage(data[0].data.titlePage);
+        setTotalPages(data[0].data.params.pagination.totalPages);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const apiURL = apiMap[category] || apiMap["default"];
+    getData(apiURL);
   }, [category, currentPage]);
 
   const handlePageChange = (newPage) => {
@@ -56,7 +72,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <div className="content">
+    loading ? <div>Loading...</div> : <> <div className="content">
       <div className="container">
         <div className="detail__heading">
           <h2 className="heading">
@@ -65,10 +81,9 @@ const CategoryPage = () => {
                 ? "PHIM CHIẾU RẠP"
                 : titlePage === "Phim Hoạt Hình"
                   ? "PHIM SẮP CHIẾU"
-                  : titlePage === ""
+                  : category === "phim-hot"
                     ? "PHIM THỊNH HÀNH"
                     : titlePage.toUpperCase()
-
             }
           </h2>
           <div className="order">
@@ -186,7 +201,7 @@ const CategoryPage = () => {
                   ? "Phim Chiếu Rạp"
                   : titlePage === "Phim Hoạt Hình"
                     ? "Phim Sắp Chiếu"
-                    : titlePage === ""
+                    : category === "phim-hot"
                       ? "Phim Thịnh Hành"
                       : titlePage
               }
@@ -198,14 +213,14 @@ const CategoryPage = () => {
               <strong>
                 {" "}
                 {
-                     titlePage === "TV Shows"
-                     ? "Phim Chiếu Rạp"
-                     : titlePage === "Phim Hoạt Hình"
-                       ? "Phim Sắp Chiếu"
-                       : titlePage === ""
-                         ? "Phim Thịnh Hành"
-                         : titlePage
-                 }
+                  titlePage === "TV Shows"
+                    ? "Phim Chiếu Rạp"
+                    : titlePage === "Phim Hoạt Hình"
+                      ? "Phim Sắp Chiếu"
+                      : category === "phim-hot"
+                        ? "Phim Thịnh Hành"
+                        : titlePage
+                }
               </strong>{" "}
             </Link>
             mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải xuống
@@ -243,7 +258,8 @@ const CategoryPage = () => {
           />
         </div>
       </div>
-    </div>
+    </div></>
+
   );
 };
 
