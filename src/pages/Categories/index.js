@@ -10,6 +10,10 @@ const apiMap = {
   "phim-bo": "https://phimapi.com/v1/api/danh-sach/phim-bo",
   "phim-sap-chieu": "https://phimapi.com/v1/api/danh-sach/hoat-hinh",
   "phim-chieu-rap": "https://phimapi.com/v1/api/danh-sach/tv-shows",
+  "phim-hot": [
+    "https://phimapi.com/v1/api/danh-sach/phim-le",
+    "https://phimapi.com/v1/api/danh-sach/phim-bo"
+  ]
 };
 
 const CategoryPage = () => {
@@ -61,7 +65,10 @@ const CategoryPage = () => {
                 ? "PHIM CHIẾU RẠP"
                 : titlePage === "Phim Hoạt Hình"
                   ? "PHIM SẮP CHIẾU"
-                  : titlePage.toUpperCase()
+                  : titlePage === ""
+                    ? "PHIM THỊNH HÀNH"
+                    : titlePage.toUpperCase()
+
             }
           </h2>
           <div className="order">
@@ -179,7 +186,9 @@ const CategoryPage = () => {
                   ? "Phim Chiếu Rạp"
                   : titlePage === "Phim Hoạt Hình"
                     ? "Phim Sắp Chiếu"
-                    : titlePage
+                    : titlePage === ""
+                      ? "Phim Thịnh Hành"
+                      : titlePage
               }
             </li>
           </div>
@@ -189,12 +198,14 @@ const CategoryPage = () => {
               <strong>
                 {" "}
                 {
-                  titlePage === "TV Shows"
-                    ? "Phim Chiếu Rạp"
-                    : titlePage === "Phim Hoạt Hình"
-                      ? "Phim Sắp Chiếu"
-                      : titlePage
-                }
+                     titlePage === "TV Shows"
+                     ? "Phim Chiếu Rạp"
+                     : titlePage === "Phim Hoạt Hình"
+                       ? "Phim Sắp Chiếu"
+                       : titlePage === ""
+                         ? "Phim Thịnh Hành"
+                         : titlePage
+                 }
               </strong>{" "}
             </Link>
             mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải xuống

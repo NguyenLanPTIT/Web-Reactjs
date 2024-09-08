@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import PhimDeCuMoi from "../MovieDetailPage/component/PhimDeCuMoi";
 import PhimLienQuan from "../MovieDetailPage/component/FilmLienQuan";
 import { Link } from "react-router-dom";
-import { FaChevronRight } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";

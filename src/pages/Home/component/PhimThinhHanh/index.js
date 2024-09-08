@@ -20,47 +20,19 @@ const getRandomItems = (arr, num) => {
     return shuffled.slice(0, num);
 };
 
-function Movies() {
-    const [movies, setMovies] = useState([]);
+function Movies({data}) {
     const [displayItems, setDisplayItems] = useState([]);
     const [currentType, setCurrentType] = useState('all');
-    const fetchMovies = async () => {
-        try {
-            const featureResponse = await fetch('https://phimapi.com/v1/api/danh-sach/phim-le?skip=1&limit=64');
-            const featureData = await featureResponse.json();
-            const seriesResponse = await fetch('https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64');
-            const seriesData = await seriesResponse.json();
 
-            const featureMovies = featureData.data.items.map(movie => ({
-                ...movie,
-                titlePage: featureData.data.titlePage
-            }));
-            const seriesMovies = seriesData.data.items.map(movie => ({
-                ...movie,
-                titlePage: seriesData.data.titlePage
-            }));
-
-            const combinedMovies = [...featureMovies, ...seriesMovies];
-            setMovies(combinedMovies);
-            setDisplayItems(combinedMovies);
-
-        } catch (error) {
-            console.error('Failed to fetch movies:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchMovies();
-    }, []);
 
     useEffect(() => {
         if (currentType === 'all') {
-            setDisplayItems(movies);
+            setDisplayItems(data);
         } else {
-            const filteredMovies = movies.filter(movie => movie.titlePage === currentType);
+            const filteredMovies = data.filter(movie => movie.titlePage === currentType);
             setDisplayItems(filteredMovies);
         }
-    }, [currentType, movies]);
+    }, [currentType, data]);
 
     useEffect(() => {
         if (displayItems.length > 7) {

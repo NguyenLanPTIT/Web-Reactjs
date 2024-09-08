@@ -10,27 +10,17 @@ const getRandomItems = (arr, num) => {
     return shuffled.slice(0, num);
 };
 
-function PhimMoi() {
-    const [movies, setMovies] = useState([]);
+function PhimMoi({data}) {
     const [displayItems, setDisplayItems] = useState([]);
 
     useEffect(() => {
-        fetch('https://phimapi.com/v1/api/danh-sach/hoat-hinh?skip=1&limit=64')
-
-            .then(response => response.json())
-            .then(data => {
-                setMovies(data.data.items);
-                setDisplayItems(data.data.items);
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-    useEffect(() => {
-        if (displayItems.length > 10) {
-            const itemsToDisplay = getRandomItems(displayItems, 10);
+        if (data.data.items.length > 10) {
+            const itemsToDisplay = getRandomItems(data.data.items, 10);
             setDisplayItems(itemsToDisplay);
+        } else {
+            setDisplayItems(data.data.items);
         }
-    }, [displayItems]);
+    }, [data]);
 
     return (
         <div className='movie'>

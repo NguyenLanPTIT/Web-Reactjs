@@ -3,6 +3,7 @@ import "../PhimBo.scss";
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
 
+
 const listButton = [
     {
         name: "Hàn Quốc",
@@ -23,39 +24,30 @@ const getRandomItems = (arr, num) => {
     return shuffled.slice(0, num);
 };
 
-function PhimBo() {
-    const [movies, setMovies] = useState([]);
+function PhimBo({ data }) {
     const [displayItems, setDisplayItems] = useState([]);
 
     const [hoverStates, setHoverStates] = useState({});
 
+    useEffect(() => {
+        if (data.data.items.length > 12) {
+            const itemsToDisplay = getRandomItems(data.data.items, 12);
+            setDisplayItems(itemsToDisplay);
+        } else {
+            setDisplayItems(data.data.items);
+        }
+    }, [data]);
+
     const handleCategoryClick = (countryName) => {
         const filteredMovies =
             countryName === "All"
-                ? movies
-                : movies.filter((movie) =>
+            ? data.data.items
+            : data.data.items.filter(movie =>
                     movie.country.some((c) => c.name === countryName)
                 );
 
         setDisplayItems(filteredMovies);
     };
-
-    useEffect(() => {
-        fetch("https://phimapi.com/v1/api/danh-sach/phim-bo?skip=1&limit=64")
-            .then((response) => response.json())
-            .then((data) => {
-                setMovies(data.data.items);
-                setDisplayItems(data.data.items);
-            })
-            .catch((error) => console.error("Error fetching data:", error));
-    }, []);
-
-    useEffect(() => {
-        if (displayItems.length > 12) {
-            const itemsToDisplay = getRandomItems(displayItems, 12);
-            setDisplayItems(itemsToDisplay);
-        }
-    }, [displayItems]);
 
     return (
         <>
