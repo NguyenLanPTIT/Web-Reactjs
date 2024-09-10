@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.scss";
+import Logo from "../../image/logo.webp";
 const Footer = () => (
   <div className="footer">
     <div className="footer-container">
       <div className="column footer-logo">
         <div className="nav__img">
           <Link className="image" to="/">
-            <img
-              src="https://phimmoichillv.net/dev/images/logo.png"
-              alt="phimmoi"
-            ></img>
+          <img src={Logo} alt="phimmoi"></img>
           </Link>
         </div>
         <p className="text-foot">
