@@ -22,7 +22,8 @@ import avataImage from "../../image/avata.jpg";
 import avata2 from "../../image/avata2.png";
 import OffQC from "../../image/OffQC.webp";
 import { FaAngleRight } from "react-icons/fa6";
-
+import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
 import "./watch.scss";
 
 const initialComments = [
@@ -36,32 +37,34 @@ const initialComments = [
 
         cmt: "phim hay",
         name: "Trung Nguyễn",
-
     },
     {
         id: 3,
 
         cmt: "phim hay",
         name: "Oanh Kiều",
-
     },
     {
         id: 4,
         cmt: "phim hay",
         name: "Hải Nguyễn",
-
     },
 ];
 
 function Watch() {
-    const { slug } = useParams();
+    const { slug, episodeName } = useParams();
+    const navigate = useNavigate();
     const [movie, setMovie] = useState(null);
     const [episodes, setEpisodes] = useState(null);
+    const [currentEpisode, setCurrentEpisode] = useState({});
+
+    const [currentEpisodeUrl, setCurrentEpisodeUrl] = useState(null);
+    const [currentEpisodeName, setCurrentEpisodeName] = useState("");
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('Mới nhất');
+    const [selectedOption, setSelectedOption] = useState("Mới nhất");
     const [comments, setComments] = useState(initialComments);
-    const [comment, setComment] = useState('');
+    const [comment, setComment] = useState("");
     const [isFirstFocus, setIsFirstFocus] = useState(true);
     const [isFocused, setIsFocused] = useState(false);
 
@@ -73,11 +76,16 @@ function Watch() {
     };
     const handlePostComment = () => {
         if (comment.trim()) {
-            const newComment = { id: comments.length + 1, name: "Tên Người Dùng", cmt: comment };
+            const newComment = {
+                id: comments.length + 1,
+                name: "Tên Người Dùng",
+                cmt: comment,
+            };
             setComments([newComment, ...comments]);
-            setComment('');
+            setComment("");
         }
     };
+
 
     const [isActive, setIsActive] = useState(true);
     useEffect(() => {
@@ -85,33 +93,51 @@ function Watch() {
             try {
                 const response = await fetch(`https://phimapi.com/phim/${slug}`);
                 const data = await response.json();
-                console.log(data);
-                setMovie(data.movie);
-                setEpisodes(data.episodes);
+                console.log('Data loaded:', data);
+                if (data.episodes && data.episodes.length > 0) {
+                    setMovie(data.movie);
+                    setEpisodes(data.episodes);
+                    const foundEpisode = episodeName
+                        ? data.episodes[0].server_data.find(ep => ep.name.replace(/\s+/g, '-').toLowerCase() === episodeName)
+                        : data.episodes[0].server_data[0]
+                        ;
+                    setCurrentEpisode(foundEpisode);
+                    setCurrentEpisodeUrl(data.episodes[0].server_data[0].link_embed);
+                    console.log('Current episode set:', foundEpisode);
+
+                }
             } catch (error) {
                 console.error("Error fetching movie details:", error);
             }
         };
 
         fetchMovieDetails();
-    }, [slug]);
+    }, [slug, episodeName]);
+    const handleEpisodeClick = (item) => {
+        setCurrentEpisode(item);
+        setCurrentEpisodeUrl(item.link_embed);
+        setCurrentEpisodeName(item.name);
+        const episodeSlug = item.name.replace(/\s+/g, '-').toLowerCase();
+        navigate(`/xem/${slug}/${episodeSlug}`);
+    };
 
     if (!movie) {
         return <div>Movie not found</div>;
     }
 
     const renderSingleMovieInfo = () => {
-        return (
-            <div className="list-server">
-            </div>
-        );
+        return <div className="list-server"></div>;
     };
 
     const renderSeriesMovieInfo = () => {
         return (
             <div className="list-server">
                 <div className="server-group">
-                    <span> <FaDatabase className="icon-data" />Danh sách tập #PM</span>
+                    <span>
+                        {" "}
+                        <FaDatabase className="icon-data" />
+                        Danh sách tập #PM
+                    </span>
                     <ul>
                         {episodes.map(
                             (episode, index) =>
@@ -126,7 +152,11 @@ function Watch() {
                                             })
                                             .map((item, idx) => (
                                                 <button
-                                                    className={`name-chapter ${idx === 0 ? "first-item" : ""}`} key={idx}
+                                                    className={`name-chapter ${item.slug === currentEpisode.slug ? 'active' : ''}  `}
+                                                    key={idx}
+                                                    onClick={() =>
+                                                        handleEpisodeClick(item)
+                                                    }
                                                 >
                                                     {item.name}
                                                 </button>
@@ -142,18 +172,19 @@ function Watch() {
 
     return (
         <div className="watch-container">
-            <div class="block-note">Truy cập <font color="red">PhimMoiPlus.Net</font> sẽ chuyển tới link PhimMoiChill mới nhất</div>
+            <div className="block-note">
+                Truy cập <font color="red">PhimMoiPlus.Net</font>
+                sẽ chuyển tới link PhimMoiChill mới nhất
+            </div>
             <div className="breadcrumb">
-                <li
-                    itemProp="itemListElement" className="title">
+                <li itemProp="itemListElement" className="title">
                     <Link className="title-link" to="/movies">
                         <span itemProp="name">
                             <FaHome />
                             <p>Xem Phim</p>
-                            <FaAngleRight className="item"/>
+                            <FaAngleRight className="item" />
                         </span>
                     </Link>
-
                 </li>
                 <li className="name" itemProp="name">
                     {movie.category.map((category, index) => (
@@ -167,48 +198,22 @@ function Watch() {
                     {" "}
                     {movie.name} <FaAngleRight className="item" />
                 </li>
-                <li className="chaper-movie">{movie.type === 'single' ? "Tập Full" : "Tập 1"}
+                <li className="chaper-movie">
+                    {movie.type === "single" ? "Tập Full" : currentEpisode ? currentEpisode.name : 'Loading...'}
                 </li>
             </div>
             <div className="box-player">
-                <div className="player">
-                    <div
-                        className="movie"
-                        style={{ backgroundImage: `url(${movie.poster_url})` }}
-                    >  </div>
-                    <div className="play-icons"></div>
-                    <div className="control-player">
-                        <input type="range" className="progress-bar" />
-                        <div className="btn-player">
-                            <div className="play-time">
-                                <div className="play-icon">
-                                    <IoMdPlay />
-                                </div>
-                                <div className="volume-icon">
-                                    <IoMdVolumeHigh />
-                                </div>
-                                <div className="time-icon">00:00/1:36:02</div>
-                            </div>
-                            <div className="play-setting">
-                                <div className="reset-icon">
-                                    <FaArrowRotateLeft />
-                                </div>
-                                <div className="fast-icon">
-                                    <FaArrowRotateRight />
-                                </div>
-                                <div className="player-icon">
-                                    <FaChromecast />
-                                </div>
-                                <div className="set-icon">
-                                    <IoMdSettings />
-                                </div>
-                                <div className="room-icon">
-                                    <RiFullscreenLine />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {currentEpisode ? (
+                    <ReactPlayer
+                        url={currentEpisode.link_embed}
+                        playing={true}
+                        controls={true}
+                        width="100%"
+                        height="100%"
+                    />
+                ) : (
+                    <div>Loading or error in fetching video...</div>
+                )}
                 <div className="film-note">
                     Phim Xem tốt nhất trên trình duyệt Safari,FireFox hoặc Chrome. Đừng
                     tiếc 1 comment bên dưới để đánh giá phim hoặc báo lỗi. Đổi server nếu
@@ -216,30 +221,30 @@ function Watch() {
                 </div>
                 <div className="hide"></div>
                 <div className="options">
-                    <ul class="tool">
-                        <li class="off-ads">
+                    <ul className="tool">
+                        <li className="off-ads">
                             <span>Tắt QC</span>
                             <img src={OffQC} alt="Tắt QC" />
                         </li>
-                        <li class="power-lamp">
-                            <span class="text-lamp">Tắt đèn</span>
+                        <li className="power-lamp">
+                            <span className="text-lamp">Tắt đèn</span>
                             <div className="off-lamp">
                                 <FaPowerOff />
                             </div>
                         </li>
-                        <li class="autoplay">
+                        <li className="autoplay">
                             <span>Tự chuyển tập</span>
-                            <div className={`toggle-button ${isActive ? 'active' : ''}`}>
+                            <div className={`toggle-button ${isActive ? "active" : ""}`}>
                                 <div className="buttons">
                                     <button
                                         onClick={() => setIsActive(false)}
-                                        className={`button no ${!isActive ? 'no-active' : ''}`}
+                                        className={`button no ${!isActive ? "no-active" : ""}`}
                                     >
                                         NO
                                     </button>
                                     <button
                                         onClick={() => setIsActive(true)}
-                                        className={`button yes ${isActive ? 'selected' : ''}`}
+                                        className={`button yes ${isActive ? "selected" : ""}`}
                                     >
                                         YES
                                     </button>
@@ -248,8 +253,6 @@ function Watch() {
                         </li>
                     </ul>
                 </div>
-
-
             </div>
             <div className="server">
                 <center>
@@ -267,15 +270,15 @@ function Watch() {
                         </li>
                     </ul>
                 </center>
-
-
             </div>
-            {movie.type === 'single' ? renderSingleMovieInfo() : renderSeriesMovieInfo()}
-
-
+            {movie.type === "single"
+                ? renderSingleMovieInfo()
+                : renderSeriesMovieInfo()}
             <div className="box-rating">
-                <p>Đánh giá phim
-                    <span class="text">(8đ / 35 lượt)</span> </p>
+                <p>
+                    Đánh giá phim
+                    <span className="text">(8đ / 35 lượt)</span>{" "}
+                </p>
                 <div className="star">
                     <FaStar className="icon-star" />
                     <FaStar className="icon-star" />
@@ -298,28 +301,31 @@ function Watch() {
                 </div>
                 <div className="fb-save">
                     <button className="save">
-                        <MdSaveAlt className="save-icon" />Lưu vào Facebook
+                        <MdSaveAlt className="save-icon" />
+                        Lưu vào Facebook
                     </button>
                 </div>
             </div>
-            <div className="film-info" >
+            <div className="film-info">
                 <div className="film-content">
-                    <h1 className="film-heading">{movie.name} - {movie.type === 'single' ? "Tập Full" : "Tập 1"}
+                    <h1 className="film-heading">
+                        {movie.name} -   {movie.type === "single" ? "Tập Full" : currentEpisode ? currentEpisode.name : 'Loading...'}
+
+
                     </h1>
                     <h2 className="decs-head"> {movie.origin_name} </h2>
-                    <p className="decs-text">{movie.name} {movie.origin_name} {movie.year} {movie.content}
+                    <p className="decs-text">
+                        {movie.name} {movie.origin_name} {movie.year} {movie.content}
                     </p>
-
                 </div>
-
-
                 <div className="comment">
                     <div className="content-cmt">
                         <div className="header-cmt">
                             <div className="number">{comments.length} bình luận</div>
                             <div className="sort">
                                 <span> Sắp xếp theo</span>
-                                <button className="dropbtn" onClick={toggleDropdown}>{selectedOption}
+                                <button className="dropbtn" onClick={toggleDropdown}>
+                                    {selectedOption}
                                     <IoMdArrowDropup className="up" />
                                     <IoMdArrowDropdown className="down" />
                                 </button>
@@ -343,11 +349,11 @@ function Watch() {
                                 />
                                 {isFocused && !isFirstFocus && (
                                     <div className="btn-cmt">
-                                        <button className="push" onClick={handlePostComment}>Đăng</button>
+                                        <button className="push" onClick={handlePostComment}>
+                                            Đăng
+                                        </button>
                                     </div>
-
                                 )}
-
                             </div>
                         </div>
                         <div className="list-cmt">
@@ -368,7 +374,6 @@ function Watch() {
                                 </div>
                             ))}
                         </div>
-
                     </div>
                 </div>
                 <div>
@@ -377,7 +382,6 @@ function Watch() {
                 <div>
                     <PhimDeCuMoi />
                 </div>
-
             </div>
         </div>
     );

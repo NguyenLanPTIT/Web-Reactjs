@@ -19,7 +19,7 @@ function App() {
                     <Route path="/movies" element={<Home />} />
                     <Route path="/movies/:slug" element={<MovieDetailPage />} />
                     <Route path="/categories/:category" element={<Categories />} />
-                    <Route path="/xem/:slug" element={<Watch />} />
+                    <Route path="/xem/:slug/:episodeName?" element={<Watch />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="/post/:info" element={<FootLink />} />

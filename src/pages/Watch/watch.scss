@@ -559,12 +559,22 @@
                             text-decoration: none;
                             background-color: #ff9601;
                         }
+                        &:focus{
+                            background-color: #ff9601;
+
+                        }
+                       
+
+                    }
+                    .active{
+                        background: #ff9601;
 
                     }
 
                     .first-item {
                         background: #ff9601;
                     }
+                   
                 }
             }
 
