@@ -23,6 +23,7 @@ import avata2 from "../../image/avata2.png";
 import OffQC from "../../image/OffQC.webp";
 import { FaAngleRight } from "react-icons/fa6";
 import ReactPlayer from "react-player";
+import Hls from 'hls.js';
 import { useNavigate } from "react-router-dom";
 import "./watch.scss";
 
@@ -67,6 +68,7 @@ function Watch() {
     const [comment, setComment] = useState("");
     const [isFirstFocus, setIsFirstFocus] = useState(true);
     const [isFocused, setIsFocused] = useState(false);
+    const [isHls, setIsHls] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -102,8 +104,13 @@ function Watch() {
                         : data.episodes[0].server_data[0]
                         ;
                     setCurrentEpisode(foundEpisode);
-                    setCurrentEpisodeUrl(data.episodes[0].server_data[0].link_embed);
+                    setCurrentEpisodeUrl(foundEpisode.link_embed);
                     console.log('Current episode set:', foundEpisode);
+                    if (foundEpisode.link_embed.includes(".m3u8")) {
+                        setIsHls(true);
+                    } else {
+                        setIsHls(false);
+                    }
 
                 }
             } catch (error) {
@@ -113,6 +120,23 @@ function Watch() {
 
         fetchMovieDetails();
     }, [slug, episodeName]);
+    useEffect(() => {
+        if (isHls && Hls.isSupported()) {
+            const video = document.getElementById('video');
+            if (video) {
+                const hls = new Hls();
+                hls.loadSource(currentEpisodeUrl);
+                hls.attachMedia(video);
+
+                return () => {
+                    hls.destroy();
+                };
+            }
+            console.log("Current episode URL:", currentEpisodeUrl);
+            console.log("Is HLS:", isHls);
+        }
+    }, [isHls, currentEpisodeUrl]);
+
     const handleEpisodeClick = (item) => {
         setCurrentEpisode(item);
         setCurrentEpisodeUrl(item.link_embed);
@@ -120,6 +144,25 @@ function Watch() {
         const episodeSlug = item.name.replace(/\s+/g, '-').toLowerCase();
         navigate(`/xem/${slug}/${episodeSlug}`);
     };
+    const renderPlayer = () => {
+        if (!currentEpisodeUrl) return <div>Loading...</div>;
+
+        if (isHls) {
+            return <video id="video" controls width="100%" height="100%" />;
+        } else {
+            return (
+                <ReactPlayer
+                    url={currentEpisodeUrl}
+                    playing={true}
+                    controls={true}
+                    width="100%"
+                    height="100%"
+                />
+            );
+        }
+    };
+
+
 
     if (!movie) {
         return <div>Movie not found</div>;
@@ -203,17 +246,7 @@ function Watch() {
                 </li>
             </div>
             <div className="box-player">
-                {currentEpisode ? (
-                    <ReactPlayer
-                        url={currentEpisode.link_embed}
-                        playing={true}
-                        controls={true}
-                        width="100%"
-                        height="100%"
-                    />
-                ) : (
-                    <div>Loading or error in fetching video...</div>
-                )}
+                {renderPlayer()}
                 <div className="film-note">
                     Phim Xem tốt nhất trên trình duyệt Safari,FireFox hoặc Chrome. Đừng
                     tiếc 1 comment bên dưới để đánh giá phim hoặc báo lỗi. Đổi server nếu
