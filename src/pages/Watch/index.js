@@ -123,11 +123,15 @@ function Watch() {
     useEffect(() => {
         if (isHls && Hls.isSupported()) {
             const video = document.getElementById('video');
+            console.log({video});
             if (video) {
+                console.log({currentEpisodeUrl});
                 const hls = new Hls();
-                hls.loadSource(currentEpisodeUrl);
+                hls.loadSource(currentEpisodeUrl?.split('url=')[1]);
                 hls.attachMedia(video);
-
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                  });
                 return () => {
                     hls.destroy();
                 };
@@ -135,7 +139,9 @@ function Watch() {
             console.log("Current episode URL:", currentEpisodeUrl);
             console.log("Is HLS:", isHls);
         }
-    }, [isHls, currentEpisodeUrl]);
+    }, [isHls, currentEpisodeUrl]); 
+
+
 
     const handleEpisodeClick = (item) => {
         setCurrentEpisode(item);
@@ -148,7 +154,7 @@ function Watch() {
         if (!currentEpisodeUrl) return <div>Loading...</div>;
 
         if (isHls) {
-            return <video id="video" controls width="100%" height="100%" />;
+            return <video id="video" width="100%" height="100%" autoPlay loop controls />;
         } else {
             return (
                 <ReactPlayer
@@ -161,8 +167,6 @@ function Watch() {
             );
         }
     };
-
-
 
     if (!movie) {
         return <div>Movie not found</div>;

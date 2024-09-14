@@ -174,3 +174,20 @@
     }
 
 }
+
+@media (min-width: 1200px) {
+    .content-header {
+        width: 1170px;
+    }
+}
+
+@media (min-width: 992px) {
+    .content-header {
+        width: 970px;
+    }
+}
+@media (min-width: 768px) {
+    .content-header {
+        width: 750px;
+    }
+}
