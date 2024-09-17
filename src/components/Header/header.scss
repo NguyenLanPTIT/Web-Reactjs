@@ -7,6 +7,7 @@
         margin: 0 auto;
         width: auto;
         max-width: 1500px;
+
         .nav {
             margin: 0 auto;
             width: auto;
@@ -15,6 +16,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: rgba(0, 0, 0, .3);
+
 
             .container-nav {
                 display: flex;
@@ -75,7 +78,8 @@
                             display: none;
                             z-index: 100;
                             padding: 0 11px;
-                            li{
+
+                            li {
                                 width: 50%;
                                 float: left;
                                 position: relative;
@@ -85,24 +89,28 @@
                                 border: none;
                                 color: #fff;
                                 list-style: none;
-                                &:hover{
+
+                                &:hover {
                                     color: #ff9601;
                                 }
-                                p{
+
+                                p {
                                     line-height: 35px;
                                     font-size: 14px;
                                     text-transform: none;
                                     border: none;
                                     color: #fff;
                                     margin: 0;
-                                    &:hover{
+
+                                    &:hover {
                                         color: #ff9601;
                                     }
                                 }
 
                             }
                         }
-                        .span-6{
+
+                        .span-6 {
                             width: 350px;
                         }
 
@@ -172,22 +180,12 @@
 
         }
     }
-
-}
-
-@media (min-width: 1200px) {
-    .content-header {
-        width: 1170px;
+    .mobile-header{
+        display: none;
     }
-}
+    .menu-mobile{
+        display: none;
+    }
+   
 
-@media (min-width: 992px) {
-    .content-header {
-        width: 970px;
-    }
-}
-@media (min-width: 768px) {
-    .content-header {
-        width: 750px;
-    }
 }
