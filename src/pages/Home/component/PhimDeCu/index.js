@@ -19,14 +19,37 @@ function MovieSlider({data}) {
     const settings = {
         dots: false,
         infinite: true,
-        // speed: 500,
+        speed: 500,
         slidesToShow: 5,
         slidesToScroll: 5,
         autoplay: true,
-        // autoplaySpeed: 2000
+        autoplaySpeed: 2000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        arrows: true
+        arrows: true,
+        responsive: [
+            {
+              breakpoint: 1200, 
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4
+              }
+            },
+            {
+                breakpoint: 1000, 
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              },
+            {
+              breakpoint: 500, 
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            }
+          ]
     };
     function getLabel(movie) {
         if (movie.episode_current) {
@@ -42,6 +65,9 @@ function MovieSlider({data}) {
         <>
             <div className='movie'>
                 <div className='movie__heading mar-8'>
+                    <h2>PHIM ĐỀ CỬ</h2>
+                </div>
+                <div className='mobile__heading mar-8'>
                     <h2>PHIM ĐỀ CỬ</h2>
                 </div>
                 <Slider {...settings} className='slider'>

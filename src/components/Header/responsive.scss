@@ -93,7 +93,7 @@
             opacity: 0;
             transition: max-height 0.5s ease-out;
 
-            ul {
+            .nav__menu {
                 list-style: none;
                 padding: 0;
                 margin: 0;
@@ -150,6 +150,7 @@
                         border-bottom: none;
                         background: #121212;
                         font-size: 14px;
+                        padding: 0;
 
 
                         &:hover {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "../PhimBo.scss";
+import "../../../Home/PhimBo.scss";
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
 
@@ -19,12 +19,28 @@ function PhimLe({ data }) {
     const [displayItems, setDisplayItems] = useState([]);
 
     useEffect(() => {
-        if (data.data.items.length > 12) {
-            const itemsToDisplay = getRandomItems(data.data.items, 12);
-            setDisplayItems(itemsToDisplay);
-        } else {
-            setDisplayItems(data.data.items);
+        function handleResize() {
+            const screenWidth = window.innerWidth;
+            let numItems;
+            if (screenWidth < 1200) {
+                numItems = 9;
+            }
+            else {
+                numItems = 12;
+            }
+
+            if (data.data.items.length > numItems) {
+                const itemsToDisplay = getRandomItems(data.data.items, numItems);
+                setDisplayItems(itemsToDisplay);
+            } else {
+                setDisplayItems(data.data.items);
+            }
         }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => window.removeEventListener('resize', handleResize);
     }, [data]);
 
     const handleCategoryClick = (categoryName) => {
@@ -54,6 +70,25 @@ function PhimLe({ data }) {
                         <FaCaretRight />
                     </li>
                 </div>
+                <div className="mobile__heading">
+                    <Link className="link" to="/categories/phim-le">
+                        <h2> PHIM LẺ MỚI CẬP NHẬT</h2>{" "}
+                    </Link>
+                    <Link className="link-btn" to="/categories/phim-le">
+                        Xem tất cả
+                        <FaCaretRight />
+                    </Link>
+
+                    <ul className="mobile__type">
+                        {listButton.map((item, i) => (
+                            <li key={i} onClick={() => handleCategoryClick(item.name)}>
+                                <p>{item.name}</p>
+                            </li>
+                        ))}
+                    </ul>
+
+                </div>
+
                 <div className="movie__list">
                     {displayItems.map((item, index) => (
                         <div key={index} className={`movie__item ${index === 0 ? 'large' : ""}`}>
