@@ -5,6 +5,8 @@ import { FaCaretRight } from "react-icons/fa";
 import React from 'react';
 import { Link } from "react-router-dom";
 import { FaCaretLeft } from "react-icons/fa";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 
 import "./phimdecu.scss"
 
@@ -77,7 +79,7 @@ function MovieSlider({data}) {
                                 <span className="lable">
                                     {getLabel(item)}</span>
                                 <div className='movie__image'>
-                                    <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
+                                <LazyLoadImage  src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <p>{item.name}</p>
                                     <div className='play-movie'>
                                     </div>

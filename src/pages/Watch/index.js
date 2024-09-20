@@ -6,14 +6,7 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
-import { IoMdPlay } from "react-icons/io";
-import { IoMdVolumeHigh } from "react-icons/io";
-import { FaArrowRotateLeft } from "react-icons/fa6";
-import { FaArrowRotateRight } from "react-icons/fa6";
-import { FaChromecast } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import { RiFullscreenLine } from "react-icons/ri";
 import { FaPowerOff } from "react-icons/fa6";
 import { MdSaveAlt } from "react-icons/md";
 import { FaDatabase } from "react-icons/fa";
@@ -26,6 +19,10 @@ import ReactPlayer from "react-player";
 import Hls from 'hls.js';
 import { useNavigate } from "react-router-dom";
 import "./watch.scss";
+import "./responsive.scss";
+import { getData } from '../customHook';
+
+
 
 const initialComments = [
     {
@@ -53,6 +50,12 @@ const initialComments = [
 ];
 
 function Watch() {
+    const [fimlData, setFimlData] = useState(
+        {
+            decu: [],
+
+        }
+    );
     const { slug, episodeName } = useParams();
     const navigate = useNavigate();
     const [movie, setMovie] = useState(null);
@@ -88,6 +91,21 @@ function Watch() {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const data = await getData();
+    
+            setFimlData({
+              decu: data.shuffledMovies,
+            });
+    
+          } catch (error) {
+          }
+
+        };
+        fetchData();
+      }, []);
 
     const [isActive, setIsActive] = useState(true);
     useEffect(() => {
@@ -123,15 +141,15 @@ function Watch() {
     useEffect(() => {
         if (isHls && Hls.isSupported()) {
             const video = document.getElementById('video');
-            console.log({video});
+            console.log({ video });
             if (video) {
-                console.log({currentEpisodeUrl});
+                console.log({ currentEpisodeUrl });
                 const hls = new Hls();
                 hls.loadSource(currentEpisodeUrl?.split('url=')[1]);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
                     video.play();
-                  });
+                });
                 return () => {
                     hls.destroy();
                 };
@@ -139,7 +157,7 @@ function Watch() {
             console.log("Current episode URL:", currentEpisodeUrl);
             console.log("Is HLS:", isHls);
         }
-    }, [isHls, currentEpisodeUrl]); 
+    }, [isHls, currentEpisodeUrl]);
 
 
 
@@ -198,6 +216,7 @@ function Watch() {
                                                 return episodeNumberA - episodeNumberB;
                                             })
                                             .map((item, idx) => (
+
                                                 <button
                                                     className={`name-chapter ${item.slug === currentEpisode.slug ? 'active' : ''}  `}
                                                     key={idx}
@@ -224,7 +243,7 @@ function Watch() {
                 sẽ chuyển tới link PhimMoiChill mới nhất
             </div>
             <div className="breadcrumb">
-                <li itemProp="itemListElement" className="title">
+                <li className="name" itemProp="name">
                     <Link className="title-link" to="/movies">
                         <span itemProp="name">
                             <FaHome />
@@ -232,22 +251,21 @@ function Watch() {
                             <FaAngleRight className="item" />
                         </span>
                     </Link>
-                </li>
-                <li className="name" itemProp="name">
                     {movie.category.map((category, index) => (
                         <span className="item-category" key={index}>
                             Phim {category.name}
                             <FaAngleRight className="item" />
                         </span>
                     ))}
+                    <li className="name-movie">
+                        {" "}
+                        {movie.name} <FaAngleRight className="item" />
+                    </li>
+                    <li className="chaper-movie">
+                        {movie.type === "single" ? "Tập Full" : currentEpisode ? currentEpisode.name : 'Loading...'}
+                    </li>
                 </li>
-                <li className="name-movie">
-                    {" "}
-                    {movie.name} <FaAngleRight className="item" />
-                </li>
-                <li className="chaper-movie">
-                    {movie.type === "single" ? "Tập Full" : currentEpisode ? currentEpisode.name : 'Loading...'}
-                </li>
+
             </div>
             <div className="box-player">
                 {renderPlayer()}
@@ -414,10 +432,10 @@ function Watch() {
                     </div>
                 </div>
                 <div>
-                    <PhimLienQuan />
+                    <PhimLienQuan data={fimlData.decu} />
                 </div>
                 <div>
-                    <PhimDeCuMoi />
+                    <PhimDeCuMoi data={fimlData.decu} />
                 </div>
             </div>
         </div>

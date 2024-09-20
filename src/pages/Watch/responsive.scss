@@ -1,0 +1,23 @@
+
+@media (max-width: 1200px) {
+    .watch-container {
+        width: 100% !important;
+        padding-left: 1% !important;
+        padding-right: 1% !important;
+        box-sizing: border-box;
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            line-height: 1.5em;
+
+      
+            li {
+              display: flex;
+              align-items: center;
+              flex-wrap: wrap;
+            }
+            
+          }
+    }
+}

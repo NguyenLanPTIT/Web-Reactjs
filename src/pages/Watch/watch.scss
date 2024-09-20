@@ -1,6 +1,6 @@
 .watch-container {
     padding: 30px 10px 10px;
-    margin: -40px auto 0;
+    margin: 0 auto;
     background: #222;
     overflow: hidden;
     max-width: 980px;
@@ -25,10 +25,9 @@
         align-items: center;
         text-align: center;
 
-        .title {
-            display: inline-block;
+        .name {
+            display: flex;
             list-style: none;
-
             .title-link {
                 font-size: 15px;
                 font-weight: 400;
@@ -54,11 +53,6 @@
 
                 }
             }
-        }
-
-        .name {
-            display: flex;
-            list-style: none;
 
             .item-category {
                 display: flex;
@@ -74,26 +68,27 @@
                     font-size: 12px;
                 }
             }
-
-        }
-        .name-movie{
-            color: #ff9601;
-            display: flex;
-            font-size: 15px;
-            text-align: center;
-            align-items: center;
-            .item {
+            .name-movie{
                 color: #ff9601;
-                font-size: 12px;
+                display: flex;
+                font-size: 15px;
+                text-align: center;
+                align-items: center;
+                .item {
+                    color: #ff9601;
+                    font-size: 12px;
+                }
             }
-        }
+    
+            li {
+                font-size: 14px;
+                color: #dcdcdc;
+                list-style: none;
+                font-weight: 500;
+            }
 
-        li {
-            font-size: 14px;
-            color: #dcdcdc;
-            list-style: none;
-            font-weight: 500;
         }
+ 
     }
 
     .box-player {

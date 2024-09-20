@@ -115,8 +115,9 @@
                 display: block;
                 margin: 0 8px;
                 overflow: hidden;
-                ;
-                height: 117px !important;
+                height: 117px ;
+                position: relative;
+
 
                 &:hover {
                     img {
@@ -137,7 +138,7 @@
                     bottom: -10px;
                     left: 0;
                     right: 0;
-                    background: rgba(0, 0, 0, .6);
+                    background: rgba(0, 0, 0, .7);
                     color: #fff;
                     padding: 10px;
                     line-height: 1.3em;
@@ -147,6 +148,7 @@
                     font-size: 15px;
                     margin-top: 20px;
                     margin-bottom: 10px;
+                    font-weight: 500;
 
                 }
 
@@ -184,3 +186,4 @@
         display: none !important;
     }
 }
+

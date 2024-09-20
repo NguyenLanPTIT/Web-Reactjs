@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../../../Home/PhimBo.scss";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { FaCaretRight } from "react-icons/fa";
 
@@ -48,8 +49,8 @@ function Movies({ data }) {
       } else {
         numItems = 7;
       }
-      if (displayItems.length > numItems) {
-        const itemsToDisplay = getRandomItems(displayItems, numItems);
+      if (data.length > numItems) {
+        const itemsToDisplay = getRandomItems(data, numItems);
         setDisplayItems(itemsToDisplay);
       }
     }
@@ -57,7 +58,7 @@ function Movies({ data }) {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [displayItems, data]);
+  }, [data]);
 
   return (
     <div className="movie">
@@ -109,7 +110,7 @@ function Movies({ data }) {
             <Link className="link" to={`/movies/${item.slug}`}>
               <span className="lable">HD-{item.lang}</span>
               <div className="movie__image">
-                <img
+              <LazyLoadImage
                   src={`https://img.phimapi.com/${item.poster_url}`}
                   alt={item.name}
                 />

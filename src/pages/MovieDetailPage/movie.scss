@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .movie-container {
     max-width: 980px;
     margin: 0 auto;
@@ -16,10 +20,10 @@
         align-items: center;
         text-align: center;
 
-        .title {
-            display: inline-block;
+        .name {
+            display: flex;
             list-style: none;
-
+            line-height: 1.5em;
             .title-link {
                 font-size: 15px;
                 font-weight: 400;
@@ -38,6 +42,7 @@
                         margin: 0 0 0 2px;
                         font-size: 14px;
                     }
+
                     .item {
                         color: #ff9601;
                         font-size: 12px;
@@ -45,11 +50,6 @@
 
                 }
             }
-        }
-
-        .name {
-            display: flex;
-            list-style: none;
 
             .item-category {
                 display: flex;
@@ -221,17 +221,19 @@
             text-align: center;
             align-items: center;
 
-            .heading {
-                font-family: Arial, Tahoma;
-                font-size: 14px;
-                color: #dcdcdc;
-                float: left;
-                margin: 10px;
-            }
+          
 
             .item-chapter {
                 list-style: none;
                 display: flex;
+                .heading {
+                    font-family: Arial, Tahoma;
+                    font-size: 14px;
+                    color: #dcdcdc;
+                    float: left;
+                    margin: 10px;
+                }
+ 
 
                 .name-chapter {
                     float: left;
@@ -389,6 +391,31 @@
 
                     strong {
                         font-weight: 700;
+                    }
+                }
+            }
+
+            .trailer-film {
+                margin: 10px 0 0;
+                border-bottom: 1px solid #3a3a3a;
+                padding: 0 0 10px;
+
+                .trailer-container {
+                    .responsive-iframe-container {
+                        position: relative;
+                        padding-bottom: 56.25%;
+                        height: 0;
+                        overflow: hidden;
+                        max-width: 100%;
+
+                        iframe {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            border: 0;
+                        }
                     }
                 }
             }

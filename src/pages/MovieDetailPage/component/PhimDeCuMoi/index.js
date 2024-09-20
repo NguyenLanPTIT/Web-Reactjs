@@ -2,11 +2,14 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCaretRight } from "react-icons/fa";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import { FaCaretLeft } from "react-icons/fa";
 
 import "./phimdecumoi.scss"
+import "./phimmoi.scss"
+
+
 
 const PrevArrow = ({ onClick }) => (
     <button className="slick-prev custom-arrow " onClick={onClick}><FaCaretLeft /></button>
@@ -15,17 +18,41 @@ const PrevArrow = ({ onClick }) => (
   const NextArrow = ({ onClick }) => (
     <button className="slick-next custom-arrow  " onClick={onClick}><FaCaretRight /></button>
   );
-function MovieSlider() {
+function MovieSlider({data}) {
+   
     const settings = {
         dots: false,
         infinite: true,
-        // speed: 500,
+        speed: 500,
         slidesToShow: 5,
         slidesToScroll: 5,
-        // autoplay: true,
-        // autoplaySpeed: 2000
+        autoplay: true,
+        autoplaySpeed: 2000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
+        responsive: [
+            {
+              breakpoint: 1200, 
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4
+              }
+            },
+            {
+                breakpoint: 1000, 
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              },
+            {
+              breakpoint: 500, 
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            }
+          ],
         arrows: true
     };
     function getLabel(movie) {
@@ -37,33 +64,6 @@ function MovieSlider() {
             return 'HD';
         }
     }
-    const [data, setMovies] = useState([]);
-    useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                const [responseOne, responseTwo, responseThree, responseFour] = await Promise.all([
-                    fetch('https://phimapi.com/v1/api/danh-sach/phim-le'),
-                    fetch('https://phimapi.com/v1/api/danh-sach/phim-bo'),
-                    fetch('https://phimapi.com/v1/api/danh-sach/hoat-hinh'),
-                    fetch('https://phimapi.com/v1/api/danh-sach/tv-shows')
-                ]);
-
-                const moviesOne = await responseOne.json();
-                const moviesTwo = await responseTwo.json();
-                const moviesThree = await responseThree.json();
-                const moviesFour = await responseFour.json();
-
-                // Trộn và xáo trộn dữ liệu
-                const combinedMovies = [...moviesOne.data.items, ...moviesTwo.data.items, ...moviesThree.data.items, ...moviesFour.data.items];
-                const shuffledMovies = combinedMovies.sort(() => 0.5 - Math.random());
-                setMovies(shuffledMovies);
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            }
-        };
-
-        fetchMovies();
-    }, []);
 
     return (
         <>

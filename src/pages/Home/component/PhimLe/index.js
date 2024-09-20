@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "../../../Home/PhimBo.scss";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import { FaCaretRight } from "react-icons/fa";
 
 const listButton = [
@@ -95,7 +97,7 @@ function PhimLe({ data }) {
                             <Link className="link" to={`/movies/${item.slug}`}>
                                 <span className="lable">HD-{item.lang}</span>
                                 <div className='movie__image'>
-                                    <img src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
+                                <LazyLoadImage src={`https://img.phimapi.com/${item.poster_url}`} alt={item.name} />
                                     <p>{item.name}</p>
                                     <div className='play-movie'>
                                     </div>

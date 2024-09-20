@@ -4,6 +4,9 @@ import PhimDeCuMoi from "./component/PhimDeCuMoi";
 import PhimLienQuan from "./component/FilmLienQuan";
 import { Link } from "react-router-dom";
 import "./movie.scss";
+import "./responsive.scss";
+import { useNavigate } from "react-router-dom";
+
 import { FaHome } from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
@@ -13,9 +16,11 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import avataImage from "../../image/avata.jpg";
 import { FaAngleRight } from "react-icons/fa6";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { getData } from '../customHook';
 
-import avata2 from '../../image/avata2.png';
 
+import avata2 from "../../image/avata2.png";
 
 const initialComments = [
   {
@@ -28,34 +33,42 @@ const initialComments = [
 
     cmt: "phim hay",
     name: "Trung Nguyễn",
-
   },
   {
     id: 3,
 
     cmt: "phim hay",
     name: "Oanh Kiều",
-
   },
   {
     id: 4,
     cmt: "phim hay",
     name: "Hải Nguyễn",
-
   },
 ];
+
 function MovieDetailPage() {
-  const { slug } = useParams();
+
+  const [fimlData, setFimlData] = useState(
+    {
+      decu: [],
+
+    }
+  );
+  const { slug, episodeName } = useParams();
+  const navigate = useNavigate();
+
   const [movie, setMovie] = useState(null);
   const [episodes, setEpisodes] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [comments, setComments] = useState(initialComments);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [isFirstFocus, setIsFirstFocus] = useState(true);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Mới nhất');
+  const [loading, setLoading] = useState(true);
+  const [selectedOption, setSelectedOption] = useState("Mới nhất");
   const toggleDropdown = () => setIsOpen(!isOpen);
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -64,16 +77,44 @@ function MovieDetailPage() {
 
   const handlePostComment = () => {
     if (comment.trim()) {
-      const newComment = { id: comments.length + 1, name: "Tên Người Dùng", cmt: comment };
+      const newComment = {
+        id: comments.length + 1,
+        name: "Tên Người Dùng",
+        cmt: comment,
+      };
       setComments([newComment, ...comments]);
-      setComment('');
+      setComment("");
     }
   };
 
   const toggleTrailer = () => {
     setShowTrailer(!showTrailer);
+    if (!showTrailer) {
+      const trailerSection = document.getElementById("trailer-section");
+      if (trailerSection) {
+        trailerSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const data = await getData();
 
+        setFimlData({
+          decu: data.shuffledMovies,
+        });
+        setLoading(false);
+
+      } catch (error) {
+      }
+      finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [slug]);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -83,7 +124,6 @@ function MovieDetailPage() {
         const data = await response.json();
         setMovie(data.movie);
         setEpisodes(data.episodes);
-
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
@@ -101,12 +141,14 @@ function MovieDetailPage() {
       <div>
         <li>
           <label>Đang phát:</label>{" "}
-          <span className="type"> {movie.quality} {movie.lang}</span>
+          <span className="type">
+            {" "}
+            {movie.quality} {movie.lang}
+          </span>
         </li>
 
         <li>
-          <label>Năm phát hành:</label>{" "}
-          <span> {movie.year}</span>
+          <label>Năm phát hành:</label> <span> {movie.year}</span>
         </li>
         <li>
           <label>Quốc gia:</label>{" "}
@@ -118,12 +160,10 @@ function MovieDetailPage() {
           <span>{movie.category.map((cat) => cat.name).join(", ")}</span>
         </li>
         <li>
-          <label>Đạo diễn:</label>{" "}
-          <span>{movie.director.join(", ")}</span>
+          <label>Đạo diễn:</label> <span>{movie.director.join(", ")}</span>
         </li>
         <li>
-          <label>Thời lượng:</label>{" "}
-          <span>{movie.time}</span>
+          <label>Thời lượng:</label> <span>{movie.time}</span>
         </li>
         <li>
           <label>Diễn viên:</label>
@@ -132,21 +172,28 @@ function MovieDetailPage() {
       </div>
     );
   };
+  const handleEpisodeClick = (item) => {
+    const episodeSlug = item.name.replace(/\s+/g, "-").toLowerCase();
+    navigate(`/xem/${slug}/${episodeSlug}`);
+  };
 
   const renderSeriesMovieInfo = () => {
     return (
       <div>
         <li>
           <label>Đang phát:</label>{" "}
-          {movie.episode_current.includes("Hoàn tất") ?
-            <span className="type"> {movie.episode_current}</span> :
-            <span className="type"> {movie.quality} {movie.lang}</span>
-          }
+          {movie.episode_current.includes("Hoàn tất") ? (
+            <span className="type"> {movie.episode_current}</span>
+          ) : (
+            <span className="type">
+              {" "}
+              {movie.quality} {movie.lang}
+            </span>
+          )}
         </li>
 
         <li>
-          <label>Năm phát hành:</label>{" "}
-          <span> {movie.year}</span>
+          <label>Năm phát hành:</label> <span> {movie.year}</span>
         </li>
         <li>
           <label>Quốc gia:</label>{" "}
@@ -158,12 +205,10 @@ function MovieDetailPage() {
           <span>{movie.category.map((cat) => cat.name).join(", ")}</span>
         </li>
         <li>
-          <label>Đạo diễn:</label>{" "}
-          <span>{movie.director.join(", ")}</span>
+          <label>Đạo diễn:</label> <span>{movie.director.join(", ")}</span>
         </li>
         <li>
-          <label>Thời lượng:</label>{" "}
-          <span>{movie.episode_total} Tập</span>
+          <label>Thời lượng:</label> <span>{movie.episode_total} Tập</span>
         </li>
         <li>
           <label>Diễn viên:</label>
@@ -173,19 +218,19 @@ function MovieDetailPage() {
     );
   };
   function extractYouTubeID(url) {
-    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    const regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     const match = url.match(regExp);
-    return (match && match[7].length === 11) ? match[7] : false;
+    return match && match[7].length === 11 ? match[7] : false;
   }
   const videoID = extractYouTubeID(movie.trailer_url);
   const embedURL = `https://www.youtube.com/embed/${videoID}`;
 
   return (
+    loading ? <div>Loading...</div> : <>
     <div className="movie-container">
       <div className="breadcrumb">
-
-        <li
-          itemProp="itemListElement" className="title">
+        <li className="name" itemProp="name">
           <Link className="title-link" to="/movies">
             <span itemProp="name">
               <FaHome />
@@ -193,42 +238,55 @@ function MovieDetailPage() {
               <FaAngleRight className="item" />
             </span>
           </Link>
-
-        </li>
-
-        <li className="name" itemProp="name">
           {movie.category.map((category, index) => (
             <span className="item-category" key={index}>
               Phim {category.name}
               <FaAngleRight className="item" />
             </span>
           ))}
+          <li> {movie.name}</li>
         </li>
-        <li> {movie.name}</li>
       </div>
       <div className="info">
         <div className="image">
-          <div className="movie" style={{ backgroundImage: `url(${movie.poster_url})` }}>
-            <img className="poster" src={movie.thumb_url} alt={movie.name} />
-            <Link className='play-icons' to={`/xem/${movie.slug}`}></Link>
+          <div
+            className="movie"
+            style={{ backgroundImage: `url(${movie.poster_url})` }}
+          >
+            <LazyLoadImage
+              className="poster"
+              src={movie.thumb_url}
+              alt={movie.name}
+            />
+            <Link className="play-icons" to={`/xem/${movie.slug}`}></Link>
             <div className="text">
               <h1>{movie.name}</h1>
-              <h2>{movie.origin_name} ({movie.year})</h2>
+              <h2>
+                {movie.origin_name} ({movie.year})
+              </h2>
               <div className="list-btn">
-                <button className="trailer" onClick={toggleTrailer}> <FaYoutube className="item" />Trailer</button>
-                <button className="play"><FaRegCirclePlay className="item" />Xem phim</button>
+                <button className="trailer" onClick={toggleTrailer}>
+                  {" "}
+                  <FaYoutube className="item" />
+                  Trailer
+                </button>
+                <button className="play">
+                  <FaRegCirclePlay className="item" />
+                  Xem phim
+                </button>
               </div>
             </div>
           </div>
         </div>
-        {movie.type === 'single' ? "" :
+        {movie.type === "single" ? (
+          ""
+        ) : (
           <div className="latest-episode">
-            <span className="heading">Tập mới nhất :</span>
             {episodes.map(
               (episode, index) =>
                 episode.server_data.length > 1 && (
                   <li className="item-chapter" key={index}>
-                    <strong>{episode.name}</strong>
+                    <span className="heading">Tập mới nhất :</span>
                     {episode.server_data
                       .slice(-5)
                       .sort((a, b) => {
@@ -237,7 +295,11 @@ function MovieDetailPage() {
                         return episodeNumberB - episodeNumberA;
                       })
                       .map((item, idx) => (
-                        <button className="name-chapter" key={-idx}>
+                        <button
+                          className="name-chapter"
+                          key={-idx}
+                          onClick={() => handleEpisodeClick(item)}
+                        >
                           {item.name}
                         </button>
                       ))}
@@ -245,7 +307,7 @@ function MovieDetailPage() {
                 )
             )}
           </div>
-        }
+        )}
         <div className="text-content">
           <div className="social">
             <div className="fb-like">
@@ -271,29 +333,35 @@ function MovieDetailPage() {
             </div>
           </div>
           <ul className="block-film">
-            {movie.type === 'single' ? renderSingleMovieInfo() : renderSeriesMovieInfo()}
+            {movie.type === "single"
+              ? renderSingleMovieInfo()
+              : renderSeriesMovieInfo()}
           </ul>
+
           <div className="film-content">
-            <h3 className="film-heading">
-              Nội dung phim:
-            </h3>
-            <div className="text-decs"><strong>{movie.name} {movie.origin_name} {movie.year}</strong> {movie.content}</div>
+            <h3 className="film-heading">Nội dung phim:</h3>
+            <div className="text-decs">
+              <strong>
+                {movie.name} {movie.origin_name} {movie.year}
+              </strong>{" "}
+              {movie.content}
+            </div>
           </div>
-          <div className="trailer-film">
+          <div className="trailer-film" id="trailer-section">
             {showTrailer && (
               <div className="trailer-container">
-                <iframe
-                  width="960"
-                  height="540"
-                  src={embedURL}
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <div className="responsive-iframe-container">
+                  <iframe
+                    src={embedURL}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </div>
             )}
           </div>
           <div className="tags-film">
-            <h2 className="tag-header">Tags</h2>
+            <h3 className="tag-header">Tags</h3>
             <div className="tag-content">
               <li className="tag-btn">{movie.name} </li>
               <li className="tag-btn">{movie.origin_name} </li>
@@ -306,14 +374,15 @@ function MovieDetailPage() {
               <div className="number">{comments.length} bình luận</div>
               <div className="sort">
                 <span> Sắp xếp theo</span>
-                <button className="dropbtn" onClick={toggleDropdown}>{selectedOption}
+                <button className="dropbtn" onClick={toggleDropdown}>
+                  {selectedOption}
                   <IoMdArrowDropup className="up" />
                   <IoMdArrowDropdown className="down" />
                 </button>
               </div>
             </div>
             <div className="write-cmt">
-              <img src={avataImage} alt="avata1" />
+              <LazyLoadImage src={avataImage} alt="avata1" />
               <div className="text-btn">
                 <input
                   type="text"
@@ -330,17 +399,17 @@ function MovieDetailPage() {
                 />
                 {isFocused && !isFirstFocus && (
                   <div className="btn-cmt">
-                    <button className="push" onClick={handlePostComment}>Đăng</button>
+                    <button className="push" onClick={handlePostComment}>
+                      Đăng
+                    </button>
                   </div>
-
                 )}
-
               </div>
             </div>
             <div className="list-cmt">
               {comments.map((cmt, index) => (
                 <div key={cmt.id} className="cmt-item">
-                  <img src={avata2} alt="avata2" />
+                  <LazyLoadImage src={avata2} alt="avata2" />
                   <div className="item-content">
                     <span className="name">{cmt.name}</span>
                     <p className="item-decs">{cmt.cmt}</p>
@@ -355,17 +424,17 @@ function MovieDetailPage() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
         <div>
-          <PhimLienQuan />
+          <PhimLienQuan data={fimlData.decu} />
         </div>
         <div>
-          <PhimDeCuMoi />
+          <PhimDeCuMoi data={fimlData.decu}/>
         </div>
       </div>
     </div>
+    </>
   );
 }
 

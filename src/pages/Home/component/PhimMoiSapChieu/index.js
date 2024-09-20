@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./phimmoi.scss";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import { FaCaretRight } from "react-icons/fa";
 
 const getRandomItems = (arr, num) => {
@@ -72,7 +74,7 @@ function PhimMoi({ data }) {
           <div key={item._id} className="movie__item">
             <Link className="link" to={`/movies/${item.slug}`}>
               <div className="movie__image">
-                <img
+              <LazyLoadImage
                   src={`https://img.phimapi.com/${item.poster_url}`}
                   alt={item.name}
                 />
