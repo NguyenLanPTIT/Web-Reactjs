@@ -118,14 +118,11 @@
                         justify-content: space-between;
                         align-items: center;
 
-                        &:hover {
+                        &:hover ,&:focus {
                             color: #ff9601;
                         }
 
-                        .down-icon {
-
-                            font-size: 14px;
-                        }
+                       
                     }
                 }
 
@@ -136,10 +133,12 @@
                     background: #121212;
                     top: 100%;
                     width: 100%;
+                    padding-left: 0;
 
 
                     &.open {
                         max-height: 500px;
+                        overflow: hidden;
                     }
 
                     .sub-menu-link {
@@ -166,6 +165,16 @@
 
 
                     }
+                }
+
+                @media (max-width:500px) {
+                    .sub-menu {
+                        .sub-menu-link {
+                            width: calc(100% / 3);
+
+                        }
+                    }
+    
                 }
 
             }

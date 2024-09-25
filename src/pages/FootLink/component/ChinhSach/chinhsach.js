@@ -23,7 +23,9 @@ function ChinhSach() {
             setComment('');
         }
     };
+
     return (
+        
         <div className='container-cs'>
             <div className='static-page'>
                 <div className='title'>

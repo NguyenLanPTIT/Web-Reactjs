@@ -13,13 +13,13 @@ import "./phimmoi.scss"
 
 const PrevArrow = ({ onClick }) => (
     <button className="slick-prev custom-arrow " onClick={onClick}><FaCaretLeft /></button>
-  );
-  
-  const NextArrow = ({ onClick }) => (
+);
+
+const NextArrow = ({ onClick }) => (
     <button className="slick-next custom-arrow  " onClick={onClick}><FaCaretRight /></button>
-  );
-function MovieSlider({data}) {
-   
+);
+function MovieSlider({ data }) {
+
     const settings = {
         dots: false,
         infinite: true,
@@ -32,27 +32,27 @@ function MovieSlider({data}) {
         prevArrow: <PrevArrow />,
         responsive: [
             {
-              breakpoint: 1200, 
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4
-              }
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4
+                }
             },
             {
-                breakpoint: 1000, 
+                breakpoint: 1000,
                 settings: {
-                  slidesToShow: 3,
-                  slidesToScroll: 3
+                    slidesToShow: 3,
+                    slidesToScroll: 3
                 }
-              },
+            },
             {
-              breakpoint: 500, 
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-              }
+                breakpoint: 500,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
             }
-          ],
+        ],
         arrows: true
     };
     function getLabel(movie) {

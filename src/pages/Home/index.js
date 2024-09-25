@@ -7,6 +7,8 @@ import "./home.scss"
 import PhimThinhHanh from './component/PhimThinhHanh';
 import PhimMoiSapChieu from './component/PhimMoiSapChieu';
 import { getData } from '../customHook';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Home = () => {
   const [fimlData, setFimlData] = useState(
@@ -26,6 +28,7 @@ const Home = () => {
       setLoading(true);
       try {
         const data = await getData();
+        
         setFimlData({
           phimBo: data.phimBoData,
           phimLe: data.phimLeData,
@@ -49,12 +52,25 @@ const Home = () => {
     loading ? <div>Loading...</div> : <>
       <div className='content'>
         <div className='container'>
-          <PhimDeCu data={fimlData.decu} />
-          <PhimLe  data={fimlData.phimLe}/>
-          <PhimChieuRap data={fimlData.phimChieuRap} />
-          <PhimBo  data={fimlData.phimBo}/>
-          <PhimThinhHanh data={fimlData.phimThinhHanh}/>
-          <PhimMoiSapChieu data={fimlData.phimMoiSapChieu}/>
+        {loading ? (
+          <>
+            <Skeleton height={200} width={`100%`} count={1} />
+            <Skeleton height={200} width={`100%`} count={1} />
+            <Skeleton height={200} width={`100%`} count={1} />
+            <Skeleton height={200} width={`100%`} count={1} />
+            <Skeleton height={200} width={`100%`} count={1} />
+            <Skeleton height={200} width={`100%`} count={1} />
+          </>
+        ) : (
+          <>
+            <PhimDeCu data={fimlData.decu} />
+            <PhimLe data={fimlData.phimLe} />
+            <PhimChieuRap data={fimlData.phimChieuRap} />
+            <PhimBo data={fimlData.phimBo} />
+            <PhimThinhHanh data={fimlData.phimThinhHanh} />
+            <PhimMoiSapChieu data={fimlData.phimMoiSapChieu} />
+          </>
+        )}
         </div>
       </div>
     </>

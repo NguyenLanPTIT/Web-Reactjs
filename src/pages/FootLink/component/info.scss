@@ -329,3 +329,18 @@
         }
     }
 }
+@media (max-width:1200px){
+    .container-cs {
+        width: 100% !important;
+        padding-left: 1% !important;
+        padding-right: 1% !important;
+        box-sizing: border-box;
+        .static-page{
+            .comment{
+                .content-cmt{
+                    width: auto;
+                }
+            }
+        }
+    }
+}
