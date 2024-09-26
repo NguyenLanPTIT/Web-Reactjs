@@ -90,6 +90,12 @@ function Watch() {
             setComment("");
         }
     };
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -221,7 +227,7 @@ function Watch() {
                                                     className={`name-chapter ${item.slug === currentEpisode.slug ? 'active' : ''}  `}
                                                     key={idx}
                                                     onClick={() =>
-                                                        handleEpisodeClick(item)
+                                                        {handleEpisodeClick(item);scrollToTop();}
                                                     }
                                                 >
                                                     {item.name}
