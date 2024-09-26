@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../../Home/PhimBo.scss";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
@@ -123,7 +124,7 @@ function PhimBo({ data }) {
               <Link className="link" to={`/movies/${item.slug}`}>
                 <span className="lable">HD-{item.lang}</span>
                 <div className="movie__image">
-                  <img
+                <LazyLoadImage
                     src={`https://img.phimapi.com/${item.poster_url}`}
                     alt={item.name}
                   />

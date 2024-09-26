@@ -115,6 +115,7 @@ function PhimLe({ data }) {
                 <span className="lable">HD-{item.lang}</span>
                 <div className="movie__image">
                 <LazyLoadImage
+                 effect="blur"
                     src={`https://img.phimapi.com/${item.poster_url}`}
                     alt={item.name}
                   />

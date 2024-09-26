@@ -50,7 +50,7 @@ const Home = () => {
 
   return (
     loading ? <div>Loading...</div> : <>
-      <div className='content'>
+      <div className='content home-page'>
         <div className='container'>
         {loading ? (
           <>

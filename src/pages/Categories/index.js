@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import "./categories.scss";
+import "./responsive.scss";
+
 
 const apiMap = {
   "phim-le": [{ url: "https://phimapi.com/v1/api/danh-sach/phim-le" }],
@@ -80,7 +82,7 @@ const CategoryPage = () => {
 
   return (
     loading ? <div>Loading...</div> : <>
-      <div className="content">
+      <div className="content filter-page">
         <div className="container">
           <div className="detail__heading">
             <h2 className="heading">
