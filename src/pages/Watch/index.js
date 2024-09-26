@@ -186,9 +186,9 @@ function Watch() {
         }
     };
 
-    if (!movie) {
+   if (!movie) {
         return <div>Movie not found</div>;
-    }
+    } 
 
     const renderSingleMovieInfo = () => {
         return <div className="list-server"></div>;

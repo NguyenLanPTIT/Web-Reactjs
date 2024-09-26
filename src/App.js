@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import MovieDetailPage from './pages/MovieDetailPage';
 import Categories from './pages/Categories';
 import Watch from './pages/Watch';
-import NotFound from './pages/NotFound';
 import FootLink from './pages/FootLink';
 
 
@@ -19,7 +18,6 @@ function App() {
                     <Route path="/movies/:slug" element={<MovieDetailPage />} />
                     <Route path="/categories/:category" element={<Categories />} />
                     <Route path="/xem/:slug/:episodeName?" element={<Watch />} />
-                    <Route path="*" element={<NotFound />} />
                     <Route path="/post/:info" element={<FootLink />} />
                     <Route path="/categories/:category/page/:pageNumber" element={<Categories />} /> 
                 </Routes>

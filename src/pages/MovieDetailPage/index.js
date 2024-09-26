@@ -230,7 +230,7 @@ function MovieDetailPage() {
     loading ? <div>Loading...</div> : <>
     <div className="movie-container">
       <div className="breadcrumb">
-        <li className="name" itemProp="name">
+        <ul className="name" itemProp="name">
           <Link className="title-link" to="/movies">
             <span itemProp="name">
               <FaHome />
@@ -245,7 +245,7 @@ function MovieDetailPage() {
             </span>
           ))}
           <li> {movie.name}</li>
-        </li>
+        </ul>
       </div>
       <div className="info">
         <div className="image">
