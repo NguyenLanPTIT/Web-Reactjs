@@ -208,14 +208,26 @@ html {
                         }
                     }
 
-                    .play {
-                        color: #fff;
-                        background-color: #d9534f;
-                        border-color: #d43f3a;
+                    .play-link {
+                        list-style: none;
+                        text-decoration: none;
 
-                        .item {
-                            margin-right: 2px;
+                        .play {
+                            color: #fff;
+                            font-weight: 700;
+
+                            background-color: #d9534f;
+                            border-color: #d43f3a;
+                            display: flex;
+                            align-items: center;
+
+                            .item {
+                                margin-right: 2px;
+                            }
+
                         }
+
+
                     }
                 }
             }

@@ -7,7 +7,6 @@ import { FaAngleRight } from "react-icons/fa6";
 import "./categories.scss";
 import "./responsive.scss";
 
-
 const apiMap = {
   "phim-le": [{ url: "https://phimapi.com/v1/api/danh-sach/phim-le" }],
   "phim-bo": [{ url: "https://phimapi.com/v1/api/danh-sach/phim-bo" }],
@@ -15,7 +14,7 @@ const apiMap = {
   "phim-chieu-rap": [{ url: "https://phimapi.com/v1/api/danh-sach/tv-shows" }],
   "phim-hot": [
     { url: "https://phimapi.com/v1/api/danh-sach/phim-le", limit: 12 },
-    { url: "https://phimapi.com/v1/api/danh-sach/phim-bo", limit: 13 }
+    { url: "https://phimapi.com/v1/api/danh-sach/phim-bo", limit: 13 },
   ],
 };
 
@@ -37,11 +36,16 @@ const CategoryPage = () => {
         setLoading(true);
 
         const result = await Promise.all(
-          apiURL.map((item) => fetch(`${item.url}?page=${currentPage}&limit=${item.limit || 25}`))
+          apiURL.map((item) =>
+            fetch(`${item.url}?page=${currentPage}&limit=${item.limit || 25}`)
+          )
         );
 
         const data = await Promise.all(result.map((res) => res.json()));
-        const finalData = data.reduce((acc, current) => [...acc, ...current.data.items], []);
+        const finalData = data.reduce(
+          (acc, current) => [...acc, ...current.data.items],
+          []
+        );
 
         setMovies(
           finalData.map((movie) => ({
@@ -64,8 +68,7 @@ const CategoryPage = () => {
           );
       } catch (error) {
         console.error("Error fetching movies:", error);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
@@ -80,8 +83,10 @@ const CategoryPage = () => {
     navigate(`/categories/${category}/page/${newPage}`);
   };
 
-  return (
-    loading ? <div>Loading...</div> : <>
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <>
       <div className="content filter-page">
         <div className="container">
           <div className="detail__heading">
@@ -177,7 +182,11 @@ const CategoryPage = () => {
                   </select>
                 </li>
                 <li>
-                  <select className="form-control" id="hinhthuc" name="hinhthuc">
+                  <select
+                    className="form-control"
+                    id="hinhthuc"
+                    name="hinhthuc"
+                  >
                     <option value="">Hình thức</option>
                     <option value="phim-le">Phim lẻ</option>
                     <option value="phim-bo">Phim bộ</option>
@@ -224,9 +233,9 @@ const CategoryPage = () => {
                         : titlePage}
                 </strong>{" "}
               </Link>
-              mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải xuống
-              hơn 100.000+ bộ phim le Vietsub, thuyết minh đang thịnh hành và hay
-              nhất tháng 08 2024.
+              mới nhất và hấp dẫn, cập nhật liên tục trên phimmoi.net . Tải
+              xuống hơn 100.000+ bộ phim le Vietsub, thuyết minh đang thịnh hành
+              và hay nhất tháng 08 2024.
             </div>
             <div className="clear"></div>
           </div>
@@ -259,7 +268,8 @@ const CategoryPage = () => {
             />
           </div>
         </div>
-      </div></>
+      </div>
+    </>
   );
 };
 

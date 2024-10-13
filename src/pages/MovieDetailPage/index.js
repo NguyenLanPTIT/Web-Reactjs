@@ -270,10 +270,14 @@ function MovieDetailPage() {
                   <FaYoutube className="item" />
                   Trailer
                 </button>
-                <button className="play">
-                  <FaRegCirclePlay className="item" />
-                  Xem phim
+
+                <Link className="play-link" to={`/xem/${movie.slug}`}>
+                <button className="play">          
+                  <FaRegCirclePlay className="item"/>
+                  Xem phim 
                 </button>
+                </Link>
+
               </div>
             </div>
           </div>
